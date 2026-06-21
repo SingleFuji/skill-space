@@ -21,6 +21,13 @@
       "source": "community",
       "version": "1.0.3",
       "installedAt": "2026-06-21T07:47:46Z"
+    },
+    "gstack-plan-ceo-review": {
+      "name": "Plan Ceo Review",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=gstack-plan-ceo-review",
+      "source": "community",
+      "version": "1.0.0",
+      "installedAt": "2026-06-21T07:52:40Z"
     }
   }
 }

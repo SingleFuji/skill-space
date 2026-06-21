@@ -1,0 +1,17 @@
+{
+  "name": "tour-planner",
+  "displayName": "旅游路线规划",
+  "version": "1.0.0",
+  "description": "根据用户输入的一系列地名，自动规划驾车路线并估算每段行程的耗时。",
+  "category": "life",
+  "author": "Gemini",
+  "triggers": [
+    "规划路线",
+    "行程",
+    "旅游计划",
+    "自驾"
+  ],
+  "allowedTools": [
+    "WebSearch"
+  ]
+}
