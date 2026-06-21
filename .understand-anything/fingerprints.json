@@ -1,0 +1,197 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "103c1cbc7c5c6d79463ec81aa32fb124cd5d2e83",
+  "generatedAt": "2026-06-21T08:48:25.912Z",
+  "files": {
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "882d49a3f6397d5697ab1118f7530f6442fa49fc0242493a3e8c769adb9263ea",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": false
+    },
+    "skills/.skills_store_lock.json": {
+      "filePath": "skills/.skills_store_lock.json",
+      "contentHash": "ad3c55f34209d43c572d820be2b75275dede138a601db6b59fde3901509a1df6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "skills/charge-thinking/_meta.json": {
+      "filePath": "skills/charge-thinking/_meta.json",
+      "contentHash": "e7fcd8391f4da79d1f4c4b0ee1eb2030b5646b87a130da2c3c1fb13eef3d1674",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "skills/charge-thinking/references/Charge思维体系.md": {
+      "filePath": "skills/charge-thinking/references/Charge思维体系.md",
+      "contentHash": "e4af67667d50d9ae911f72e198ebf07880b8f21ac18d3e655725a66c27b7a690",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "skills/charge-thinking/references/底层逻辑.md": {
+      "filePath": "skills/charge-thinking/references/底层逻辑.md",
+      "contentHash": "f6e17bcc7633880a5a0bc8fddce3aae87ad6453152ec7ecd67e4c2035ee575c2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 113,
+      "hasStructuralAnalysis": true
+    },
+    "skills/charge-thinking/SKILL.md": {
+      "filePath": "skills/charge-thinking/SKILL.md",
+      "contentHash": "2b1bfd6a194ddc2f9e445e5c49897dc7598ce378d4741746f196440be5f08ba6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 216,
+      "hasStructuralAnalysis": true
+    },
+    "skills/gstack-plan-ceo-review/_meta.json": {
+      "filePath": "skills/gstack-plan-ceo-review/_meta.json",
+      "contentHash": "40f0132eab17b9a2c08d02124295ff8ac9e5def87c549496bd574eef08837b37",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "skills/gstack-plan-ceo-review/SKILL.md": {
+      "filePath": "skills/gstack-plan-ceo-review/SKILL.md",
+      "contentHash": "9f431cb930f9d34446db717be5896250507c7d554c6f7de43d1a08b292d0717f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 546,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/_meta.json": {
+      "filePath": "skills/one-person-company-plus/_meta.json",
+      "contentHash": "da51337202ce38c51fe1eee3d5395886499281674171373078de3404a1ce7d9c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/references/anti-patterns.md": {
+      "filePath": "skills/one-person-company-plus/references/anti-patterns.md",
+      "contentHash": "e892c6f75692de17335fa8273042dcf3a3e168766af3a9ef9f72fe4c9af7f657",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 129,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/references/examples.md": {
+      "filePath": "skills/one-person-company-plus/references/examples.md",
+      "contentHash": "64fc7b27b91be838a769242693a0e5ac69666551a57dc14cc09e161b6fccbaa6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 177,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/references/faq-deep.md": {
+      "filePath": "skills/one-person-company-plus/references/faq-deep.md",
+      "contentHash": "19090dabf980b7c2d4b5250e09b74f960632da2c26e5a3df82897a1dbb7e2f4c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 152,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/references/system-prompt.md": {
+      "filePath": "skills/one-person-company-plus/references/system-prompt.md",
+      "contentHash": "f9f541f02ee049c528448ac78e89e82399fc805b2d6aebd92faccbdef18b6cf0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 136,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/SKILL.md": {
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "contentHash": "c5382c0d3cb4f9c7bc12db8e2417684ced87a3f312849831a4b017bc5590aa66",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 373,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-company-plus/trace-report.html": {
+      "filePath": "skills/one-person-company-plus/trace-report.html",
+      "contentHash": "f8a10739ce3eb5dbd4b2f268ffefc8ffb76a75c6f5efb97f5a789fa6a4fedc2d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 981,
+      "hasStructuralAnalysis": false
+    },
+    "skills/one-person-mcn/_meta.json": {
+      "filePath": "skills/one-person-mcn/_meta.json",
+      "contentHash": "c43966c83ac28e5a04ad72ba8fe299cd4aeef5a2cbb5dcd66034db4aa61fb55e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "skills/one-person-mcn/SKILL.md": {
+      "filePath": "skills/one-person-mcn/SKILL.md",
+      "contentHash": "900ae597342124262f8f40664cf824b0be3f23c8c13c318d6aebe72d636cb7c7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1125,
+      "hasStructuralAnalysis": true
+    },
+    "skills/tour-planner/_meta.json": {
+      "filePath": "skills/tour-planner/_meta.json",
+      "contentHash": "3ca9cb4901a8a408f272de0595acd292490406ef966f55636630a7512da7667e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "skills/tour-planner/SKILL.md": {
+      "filePath": "skills/tour-planner/SKILL.md",
+      "contentHash": "c434c0554db081db363162eaef9a2730dc895a39b4c8b27f4ff29321b525ee3b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 101,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

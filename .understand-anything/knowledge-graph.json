@@ -1,0 +1,815 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/one-person-company-plus/SKILL.md",
+      "type": "document",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "skill-definition",
+        "productivity",
+        "AI-assistant",
+        "一人公司",
+        "one-person-company",
+        "zh-CN"
+      ],
+      "summary": "Main skill definition document for the One Person Company (OPC) all-in-one operations assistant. Defines 5 major modules (content creation, business operations, product/R&D, customer service, personal efficiency), capability boundaries, output format standards, stability guarantees, deep customization guide, FAQ, and anti-patterns. Authored by Zhou Boyuan, v2.0.0.",
+      "complexity": "moderate",
+      "name": "SKILL.md"
+    },
+    {
+      "id": "config:skills/one-person-company-plus/_meta.json",
+      "type": "config",
+      "filePath": "skills/one-person-company-plus/_meta.json",
+      "tags": [
+        "metadata",
+        "configuration",
+        "slug",
+        "version",
+        "owner"
+      ],
+      "summary": "Metadata configuration for the one-person-company-plus skill. Contains ownerId (438307), publishedAt timestamp (June 2026), slug (one-person-company-plus), and version (1.0.0).",
+      "complexity": "moderate",
+      "name": "_meta.json"
+    },
+    {
+      "id": "file:skills/one-person-company-plus/trace-report.html",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/trace-report.html",
+      "tags": [
+        "evaluation",
+        "quality-report",
+        "TRACE",
+        "score",
+        "before-after"
+      ],
+      "summary": "TRACE evaluation report for the OPC skill. Original score 4.7/5.0 (rating: Excellent) with identified weaknesses in Reliability (4.2) and Effectiveness (4.7). After targeted fixes including understanding confirmation mechanism, multi-round error correction, depth customization guide, and reference navigation table, all 5 dimensions reached 5.0/5.0 (rating: Perfect Full Score).",
+      "complexity": "moderate",
+      "name": "trace-report.html"
+    },
+    {
+      "id": "concept:skill/one-person-company-plus",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "AI-skill",
+        "independent-entrepreneur",
+        "freelancer",
+        "solo-founder",
+        "productivity"
+      ],
+      "summary": "An AI skill designed to help a single person accomplish work that would normally require a team of 5-10 people. Covers content creation, business operations, product development, customer service, and personal efficiency. Targets independent bloggers, freelancers, solo SaaS founders, and small business owners. Triggered by keywords like 一人公司, OPC, and independent entrepreneurship.",
+      "complexity": "moderate",
+      "name": "one-person-company-plus"
+    },
+    {
+      "id": "concept:module/content-creation",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "content-creation",
+        "blogging",
+        "podcast",
+        "SEO",
+        "social-media",
+        "email-marketing"
+      ],
+      "summary": "Content creation capabilities including monthly newsletter writing, podcast scripts, topic planning, SEO articles, short video scripts, social media copy, and email marketing. Targets independent bloggers, podcasters, and content entrepreneurs.",
+      "complexity": "moderate",
+      "name": "content-creation"
+    },
+    {
+      "id": "concept:module/business-operations",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "e-commerce",
+        "brand-marketing",
+        "competitive-analysis",
+        "pricing",
+        "user-persona"
+      ],
+      "summary": "Business operations capabilities including e-commerce product descriptions, brand marketing strategy, promotional campaign planning, competitor analysis, pricing strategy, user personas, and social media ad copy. Targets solo e-commerce sellers, brand owners, and independent site entrepreneurs.",
+      "complexity": "moderate",
+      "name": "business-operations"
+    },
+    {
+      "id": "concept:module/product-rd",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "product-management",
+        "PRD",
+        "API-docs",
+        "test-cases",
+        "data-dashboard",
+        "changelog"
+      ],
+      "summary": "Product and R&D capabilities including PRD writing, data dashboard design, user stories, technical scheme review, API documentation, test cases, and version changelogs. Targets independent developers, SaaS founders, and product managers.",
+      "complexity": "moderate",
+      "name": "product-rd"
+    },
+    {
+      "id": "concept:module/customer-service",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "customer-service",
+        "FAQ",
+        "complaint-handling",
+        "community-management",
+        "crisis-PR"
+      ],
+      "summary": "Customer service capabilities including service script libraries, complaint handling, refund policy explanations, FAQ generation, review guidance, community announcements, and crisis PR responses. Targets solo entrepreneurs needing 7x24 customer response.",
+      "complexity": "moderate",
+      "name": "customer-service"
+    },
+    {
+      "id": "concept:module/personal-efficiency",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "time-management",
+        "GTD",
+        "OKR",
+        "weekly-report",
+        "meeting-minutes",
+        "retrospective"
+      ],
+      "summary": "Personal efficiency capabilities including schedule planning, weekly/monthly report generation, GTD task management, meeting minutes, OKR setting, and project retrospectives. Targets solo entrepreneurs managing their own time and information.",
+      "complexity": "moderate",
+      "name": "personal-efficiency"
+    },
+    {
+      "id": "concept:evaluation/trace-full-score",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/trace-report.html",
+      "tags": [
+        "TRACE",
+        "score-5.0",
+        "evaluation-result",
+        "quality-assessment"
+      ],
+      "summary": "The OPC skill achieved a perfect 5.0/5.0 TRACE score after fixes. Five dimensions evaluated: Trust (5.0), Reliability (5.0, improved from 4.2), Adaptability (5.0, from 4.8), Convention (5.0, from 4.8), Effectiveness (5.0, from 4.7). All 20 sub-items met standards. Key improvements included understanding confirmation mechanism, multi-round error correction, depth customization with style cards/scene memory/value-add suggestions, and reference navigation table.",
+      "complexity": "moderate",
+      "name": "trace-full-score"
+    },
+    {
+      "id": "concept:reference/references-directory",
+      "type": "file",
+      "filePath": "skills/one-person-company-plus/SKILL.md",
+      "tags": [
+        "reference",
+        "documentation",
+        "system-prompt",
+        "examples",
+        "anti-patterns",
+        "FAQ"
+      ],
+      "summary": "Reference documents linked from SKILL.md for deeper use: system-prompt.md (full AI system prompt), examples.md (module output examples), anti-patterns.md (anti-pattern comparison), faq-deep.md (edge case handling), batch-processor.js (batch task script), report-generator.js (report generation script).",
+      "complexity": "moderate",
+      "name": "references-directory"
+    },
+    {
+      "id": "document:skills/one-person-company-plus/references/anti-patterns.md",
+      "type": "document",
+      "complexity": "moderate",
+      "name": "anti-patterns.md",
+      "tags": [
+        "untagged"
+      ],
+      "summary": "Documents 5 common inefficient usage patterns when using the OPC skill, with before/after comparisons covering overly vague instructions, omitting context, bundling requests, negated requirements, and expecting AI to make decisions, plus a table of forbidden use cases."
+    },
+    {
+      "id": "document:skills/one-person-company-plus/references/examples.md",
+      "type": "document",
+      "complexity": "moderate",
+      "name": "examples.md",
+      "tags": [
+        "untagged"
+      ],
+      "summary": "Collection of high-quality output examples for the OPC skill organized by module, including content creation (Xiaohongshu article, Newsletter), business operations (Shopify product page), customer service (complaint scripts), and personal productivity (GTD task sorting)."
+    },
+    {
+      "id": "document:skills/one-person-company-plus/references/faq-deep.md",
+      "type": "document",
+      "complexity": "moderate",
+      "name": "faq-deep.md",
+      "tags": [
+        "untagged"
+      ],
+      "summary": "Advanced FAQ covering edge cases for the OPC skill across content creation, business operations, customer service, personal productivity, and security/privacy domains."
+    },
+    {
+      "id": "document:skills/one-person-company-plus/references/system-prompt.md",
+      "type": "document",
+      "complexity": "moderate",
+      "name": "system-prompt.md",
+      "tags": [
+        "untagged"
+      ],
+      "summary": "Full system prompt definition for the OPC AI assistant covering core role definition, behavior rules, understanding confirmation and multi-round correction protocols, style locking, scene memory mechanisms, and module routing logic."
+    },
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Ignore patterns file for the Understand-Anything analysis tool, specifying files and directories to exclude from knowledge graph analysis. Uses gitignore-style syntax.",
+      "tags": [
+        "config",
+        "ignore",
+        "understand-anything",
+        "analysis-config"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:skills/.skills_store_lock.json",
+      "type": "config",
+      "name": ".skills_store_lock.json",
+      "filePath": "skills/.skills_store_lock.json",
+      "summary": "Lock file tracking installed community skills including charge-thinking, one-person-company-plus, one-person-mcn, and gstack-plan-ceo-review. Records version, source, and installation timestamp for each skill.",
+      "tags": [
+        "config",
+        "lock-file",
+        "skill-registry",
+        "installation-record",
+        "community-skills"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:skills/charge-thinking/_meta.json",
+      "type": "config",
+      "name": "_meta.json",
+      "filePath": "skills/charge-thinking/_meta.json",
+      "summary": "Metadata for the charge-thinking skill (version 1.0.0) with owner ID, publication timestamp, and slug.",
+      "tags": [
+        "config",
+        "metadata",
+        "charge-thinking",
+        "skill-meta"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/charge-thinking/references/Charge思维体系.md",
+      "type": "document",
+      "name": "Charge思维体系.md",
+      "filePath": "skills/charge-thinking/references/Charge思维体系.md",
+      "summary": "Reference document describing the Charge Thinking System, covering logical thinking methods (induction, deduction, analogy), structured thinking, systematic thinking (causal chains, reinforcing loops, balancing loops, lag effects), critical thinking, reverse thinking, strategic thinking, and first-principles methodology. References Ray Dalio's Principles.",
+      "tags": [
+        "documentation",
+        "thinking-framework",
+        "logical-thinking",
+        "systematic-thinking",
+        "strategic-thinking",
+        "critical-thinking",
+        "charge-thinking",
+        "reference"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/charge-thinking/references/底层逻辑.md",
+      "type": "document",
+      "name": "底层逻辑.md",
+      "filePath": "skills/charge-thinking/references/底层逻辑.md",
+      "summary": "Reference document on foundational logical principles covering right-vs-wrong logic, questioning frameworks, debate strategy, problem-solving methodology, insight (systems thinking), process vs system, compound interest thinking, probability thinking, mathematical thinking, systems thinking for business models, time management, exponential growth opportunities, individual evolution (capability, efficiency, leverage), understanding others, and social cooperation logic.",
+      "tags": [
+        "documentation",
+        "first-principles",
+        "logical-thinking",
+        "decision-making",
+        "systems-thinking",
+        "problem-solving",
+        "business-logic",
+        "reference"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/charge-thinking/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/charge-thinking/SKILL.md",
+      "summary": "Charge Thinking composite analytical framework skill combining bottom-line logic and Charge thinking system with CEO Plan Review. Seven-step analysis covering systems thinking (elements, causal chains, reinforcing/balancing loops, lag effects), logical thinking (golden circle, evidence principles, critical review, induction vs deduction), strategic thinking (endgame prediction, capability gap analysis, breakthrough points), probability and mathematical thinking, counter-intuitive insights, and CEO-level review. Depends on plan-ceo-review skill.",
+      "tags": [
+        "documentation",
+        "skill-definition",
+        "charge-thinking",
+        "analytical-framework",
+        "strategic-thinking",
+        "systems-thinking",
+        "decision-making",
+        "ceo-review"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:skills/gstack-plan-ceo-review/_meta.json",
+      "type": "config",
+      "name": "_meta.json",
+      "filePath": "skills/gstack-plan-ceo-review/_meta.json",
+      "summary": "Metadata for the gstack-plan-ceo-review skill (version 1.0.0) with owner ID, slug, and publication timestamp.",
+      "tags": [
+        "config",
+        "metadata",
+        "plan-ceo-review",
+        "skill-meta"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/gstack-plan-ceo-review/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/gstack-plan-ceo-review/SKILL.md",
+      "summary": "CEO/founder-mode plan review skill with four modes (SCOPE EXPANSION, SELECTIVE EXPANSION, HOLD SCOPE, SCOPE REDUCTION). Covers 18 cognitive patterns for how great CEOs think, system audit, nuclear scope challenge, 11 review sections (architecture, error/rescue, security, data flow, code quality, tests, performance, observability, deployment, long-term trajectory, design/UX), required outputs including CEO plans, error registries, failure mode registries, diagrams, and completion summaries.",
+      "tags": [
+        "documentation",
+        "skill-definition",
+        "plan-review",
+        "ceo-review",
+        "code-review",
+        "architecture-review",
+        "engineering-excellence"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:skills/one-person-mcn/_meta.json",
+      "type": "config",
+      "name": "_meta.json",
+      "filePath": "skills/one-person-mcn/_meta.json",
+      "summary": "Metadata for the one-person-mcn skill (version 1.0.3) with owner ID, slug, and publication timestamp.",
+      "tags": [
+        "config",
+        "metadata",
+        "one-person-mcn",
+        "skill-meta"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/one-person-mcn/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/one-person-mcn/SKILL.md",
+      "summary": "One-person MCN (Multi-Channel Network) skill that replaces a full MCN team with 10 AI modules: topic planning, title optimization, content writing, SEO optimization, video directing, cover design, community management, data analysis, business quoting, and publishing scheduling. Covers routing mechanisms, error handling, web search degradation strategy, credibility guarantees, output modes, and full content production workflow. Targets Chinese social media platforms (Xiaohongshu, Douyin, WeChat Official Accounts, Bilibili).",
+      "tags": [
+        "documentation",
+        "skill-definition",
+        "mcn",
+        "content-creation",
+        "social-media",
+        "self-media",
+        "xiaohongshu",
+        "douyin",
+        "seo",
+        "video-production"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:skills/tour-planner/_meta.json",
+      "type": "config",
+      "name": "_meta.json",
+      "filePath": "skills/tour-planner/_meta.json",
+      "summary": "Metadata for the tour-planner skill (version 1.0.0, category: life, author: Gemini) with description, triggers, and allowed tools configuration.",
+      "tags": [
+        "config",
+        "metadata",
+        "tour-planner",
+        "skill-meta",
+        "life-category"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/tour-planner/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/tour-planner/SKILL.md",
+      "summary": "Tour planner skill for self-driving travel route planning. Four-step workflow: identify and parse locations (cities, counties, scenic spots), query driving time via web search, generate Baidu Maps navigation links, and output formatted itinerary with estimated driving duration, waypoints, sightseeing recommendations, and local cuisine suggestions.",
+      "tags": [
+        "documentation",
+        "skill-definition",
+        "tour-planner",
+        "travel-planning",
+        "self-driving",
+        "route-planning",
+        "navigation"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:skill/one-person-company-plus",
+      "direction": "forward",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:skills/one-person-company-plus/_meta.json",
+      "target": "concept:skill/one-person-company-plus",
+      "direction": "forward",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/one-person-company-plus/trace-report.html",
+      "target": "concept:skill/one-person-company-plus",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:module/content-creation",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:module/business-operations",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:module/product-rd",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:module/customer-service",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:module/personal-efficiency",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/one-person-company-plus/trace-report.html",
+      "target": "concept:evaluation/trace-full-score",
+      "direction": "forward",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/SKILL.md",
+      "target": "concept:reference/references-directory",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/one-person-company-plus/trace-report.html",
+      "target": "document:skills/one-person-company-plus/SKILL.md",
+      "direction": "forward",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/anti-patterns.md",
+      "target": "document:skills/one-person-company-plus/references/examples.md",
+      "type": "related",
+      "properties": {
+        "reason": "Both are reference docs for the same skill (one-person-company-plus); anti-patterns shows what NOT to do, examples shows correct usage patterns"
+      },
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/anti-patterns.md",
+      "target": "document:skills/one-person-company-plus/references/faq-deep.md",
+      "type": "related",
+      "properties": {
+        "reason": "Both are reference docs for the same skill (one-person-company-plus); FAQ-deep covers edge cases that complement the anti-patterns guide"
+      },
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/anti-patterns.md",
+      "target": "document:skills/one-person-company-plus/references/system-prompt.md",
+      "type": "related",
+      "properties": {
+        "reason": "Both are reference docs for the same skill (one-person-company-plus); system-prompt defines the AI behavior that prevents the anti-patterns"
+      },
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/examples.md",
+      "target": "document:skills/one-person-company-plus/references/faq-deep.md",
+      "type": "related",
+      "properties": {
+        "reason": "Both are reference docs for the same skill (one-person-company-plus); examples demonstrate standard outputs while FAQ-deep covers edge cases"
+      },
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/examples.md",
+      "target": "document:skills/one-person-company-plus/references/system-prompt.md",
+      "type": "related",
+      "properties": {
+        "reason": "Both are reference docs for the same skill (one-person-company-plus); system-prompt defines the behavior that produces the example outputs"
+      },
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/faq-deep.md",
+      "target": "document:skills/one-person-company-plus/references/system-prompt.md",
+      "type": "related",
+      "properties": {
+        "reason": "Both are reference docs for the same skill (one-person-company-plus); FAQ-deep answers edge cases not covered in the system prompt"
+      },
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/charge-thinking/SKILL.md",
+      "target": "config:skills/charge-thinking/_meta.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:skills/charge-thinking/_meta.json",
+      "target": "document:skills/charge-thinking/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/charge-thinking/SKILL.md",
+      "target": "document:skills/charge-thinking/references/Charge思维体系.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/charge-thinking/references/Charge思维体系.md",
+      "target": "document:skills/charge-thinking/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/charge-thinking/SKILL.md",
+      "target": "document:skills/charge-thinking/references/底层逻辑.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/charge-thinking/references/底层逻辑.md",
+      "target": "document:skills/charge-thinking/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/charge-thinking/SKILL.md",
+      "target": "document:skills/gstack-plan-ceo-review/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/gstack-plan-ceo-review/SKILL.md",
+      "target": "config:skills/gstack-plan-ceo-review/_meta.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:skills/gstack-plan-ceo-review/_meta.json",
+      "target": "document:skills/gstack-plan-ceo-review/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-mcn/SKILL.md",
+      "target": "config:skills/one-person-mcn/_meta.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:skills/one-person-mcn/_meta.json",
+      "target": "document:skills/one-person-mcn/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/tour-planner/SKILL.md",
+      "target": "config:skills/tour-planner/_meta.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:skills/tour-planner/_meta.json",
+      "target": "document:skills/tour-planner/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/anti-patterns.md",
+      "target": "document:skills/one-person-company-plus/SKILL.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/examples.md",
+      "target": "document:skills/one-person-company-plus/SKILL.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/faq-deep.md",
+      "target": "document:skills/one-person-company-plus/SKILL.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/one-person-company-plus/references/system-prompt.md",
+      "target": "document:skills/one-person-company-plus/SKILL.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:skills",
+      "name": "Skill Definitions",
+      "description": "Markdown skill definition files that define each skill's purpose, capabilities, triggers, and usage instructions",
+      "nodeIds": [
+        "document:skills/one-person-company-plus/SKILL.md",
+        "document:skills/charge-thinking/SKILL.md",
+        "document:skills/gstack-plan-ceo-review/SKILL.md",
+        "document:skills/one-person-mcn/SKILL.md",
+        "document:skills/tour-planner/SKILL.md"
+      ]
+    },
+    {
+      "id": "layer:skill-configuration",
+      "name": "Skill Metadata & Configuration",
+      "description": "JSON metadata files (_meta.json) defining skill version, owner, slug, and publication info, plus the skill registry lock file",
+      "nodeIds": [
+        "config:skills/one-person-company-plus/_meta.json",
+        "config:skills/charge-thinking/_meta.json",
+        "config:skills/gstack-plan-ceo-review/_meta.json",
+        "config:skills/one-person-mcn/_meta.json",
+        "config:skills/tour-planner/_meta.json",
+        "config:skills/.skills_store_lock.json"
+      ]
+    },
+    {
+      "id": "layer:skill-references",
+      "name": "Reference Documentation",
+      "description": "Supplemental reference documents providing detailed guidance, examples, anti-patterns, FAQs, and thinking framework references for skills",
+      "nodeIds": [
+        "document:skills/one-person-company-plus/references/anti-patterns.md",
+        "document:skills/one-person-company-plus/references/examples.md",
+        "document:skills/one-person-company-plus/references/faq-deep.md",
+        "document:skills/one-person-company-plus/references/system-prompt.md",
+        "document:skills/charge-thinking/references/Charge思维体系.md",
+        "document:skills/charge-thinking/references/底层逻辑.md"
+      ]
+    },
+    {
+      "id": "layer:evaluation-and-tooling",
+      "name": "Evaluation & Tooling",
+      "description": "Skill evaluation reports, trace analysis HTML, and analysis tool configuration files",
+      "nodeIds": [
+        "file:skills/one-person-company-plus/trace-report.html",
+        "config:.understand-anything/.understandignore"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "Skill-Space is a curated collection of AI agent skills designed for Claude Code. Each skill is a self-contained directory under skills/ containing a SKILL.md definition, _meta.json metadata, and optional references/ with supporting documentation. The project serves as both a registry and a modular knowledge base, with skills spanning analytical frameworks, business operations, content creation, and practical tools."
+    },
+    {
+      "order": 2,
+      "title": "Charge Thinking — Analytical Framework",
+      "description": "The most architecturally sophisticated skill in the project, Charge Thinking combines bottom-line logic, the Charge thinking system, and CEO Plan Review into a seven-step composite framework. It covers systems thinking (causal chains, reinforcing loops, balancing loops), strategic thinking (endgame prediction, capability gaps), probability thinking, and counter-intuitive insights. This skill explicitly depends on gstack-plan-ceo-review for its final CEO-level review step.",
+      "nodeIds": [
+        "document:skills/charge-thinking/SKILL.md"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Charge Thinking Reference Materials",
+      "description": "Two foundational reference documents underpin the Charge Thinking framework. Charge思维体系.md documents the Charge thinking methodology covering induction, deduction, systematic thinking, and first-principles reasoning. 底层逻辑.md covers foundational logical principles, right-vs-wrong logic, compound interest thinking, and probability thinking. Together they provide the philosophical depth behind the skill's analytical approach.",
+      "nodeIds": [
+        "document:skills/charge-thinking/references/Charge思维体系.md",
+        "document:skills/charge-thinking/references/底层逻辑.md"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "CEO Plan Review — Decision Framework",
+      "description": "The gstack-plan-ceo-review skill provides CEO/founder-mode plan review with four scope modes (EXPANSION, SELECTIVE, HOLD, REDUCTION) and 18 cognitive patterns. It covers system audits, nuclear scope challenges, and 11 review sections from architecture to deployment. This skill is a dependency of Charge Thinking and forms the final review step in its analysis framework.",
+      "nodeIds": [
+        "document:skills/gstack-plan-ceo-review/SKILL.md"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "One Person Company Plus — Business Operations Hub",
+      "description": "The most comprehensive skill by content volume (372-line SKILL.md), OPC replaces an entire team of 5-10 people across five modules: content creation, business operations, product/R&D, customer service, and personal efficiency. Each module has defined trigger keywords and output formats. The skill achieved a perfect 5.0/5.0 TRACE evaluation score after targeted improvements.",
+      "nodeIds": [
+        "document:skills/one-person-company-plus/SKILL.md"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "OPC Reference Documents",
+      "description": "Four reference documents support the OPC skill with deeper guidance. The system-prompt.md defines the full AI behavior framework. examples.md provides high-quality output demonstrations across all modules. anti-patterns.md catalogs common mistakes with before/after comparisons. faq-deep.md covers edge cases across security, privacy, and domain-specific scenarios.",
+      "nodeIds": [
+        "document:skills/one-person-company-plus/references/system-prompt.md",
+        "document:skills/one-person-company-plus/references/examples.md",
+        "document:skills/one-person-company-plus/references/anti-patterns.md",
+        "document:skills/one-person-company-plus/references/faq-deep.md"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "OPC Trace Evaluation Report",
+      "description": "The trace-report.html documents the OPC skill's quality evaluation journey from an original score of 4.7/5.0 to a perfect 5.0/5.0 after fixes. Five dimensions were assessed: Trust, Reliability, Adaptability, Convention, and Effectiveness. The report serves as a quality benchmark and demonstrates the iterative improvement process for skill development.",
+      "nodeIds": [
+        "file:skills/one-person-company-plus/trace-report.html"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "One Person MCN — Content Creation Engine",
+      "description": "The largest single file in the project at 1124 lines, this skill replaces an entire MCN (Multi-Channel Network) agency team with 10 AI modules spanning topic planning, title optimization, content writing, SEO, video directing, cover design, community management, data analysis, business quoting, and publishing scheduling. It targets Chinese social media platforms including Xiaohongshu, Douyin, WeChat Official Accounts, and Bilibili.",
+      "nodeIds": [
+        "document:skills/one-person-mcn/SKILL.md"
+      ]
+    },
+    {
+      "order": 9,
+      "title": "Tour Planner — Practical Travel Tool",
+      "description": "A focused, minimal skill (100 lines) that plans self-driving travel routes through a four-step workflow: parsing locations, querying driving times, generating Baidu Maps links, and formatting itineraries. Unlike the larger analytical or business skills, this is a single-purpose practical tool — demonstrating the range of skill sizes and purposes in the collection.",
+      "nodeIds": [
+        "document:skills/tour-planner/SKILL.md"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Skill Infrastructure & Metadata",
+      "description": "The project's infrastructure layer consists of _meta.json files defining version, owner, and publication data for each skill, plus the .skills_store_lock.json registry tracking installation records. The .understandignore configures the knowledge graph analysis tool. These configuration files form the scaffolding that makes the skill collection self-documenting and machine-readable.",
+      "nodeIds": [
+        "config:skills/one-person-company-plus/_meta.json",
+        "config:skills/charge-thinking/_meta.json",
+        "config:skills/gstack-plan-ceo-review/_meta.json",
+        "config:skills/one-person-mcn/_meta.json",
+        "config:skills/tour-planner/_meta.json",
+        "config:skills/.skills_store_lock.json"
+      ]
+    }
+  ],
+  "version": "1.0.0",
+  "project": {
+    "name": "skill-space",
+    "description": "A curated collection of AI agent skills for Claude Code, organized as independent skill directories with definitions, metadata, and reference documentation.",
+    "languages": [
+      "html",
+      "json",
+      "markdown"
+    ],
+    "frameworks": [],
+    "analyzedAt": "2026-06-21T08:48:15.070Z",
+    "gitCommitHash": "103c1cbc7c5c6d79463ec81aa32fb124cd5d2e83"
+  }
+}
