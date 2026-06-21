@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>短期意外健康险经营数据看板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+/* ═══════════ Reset & Base ═══════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 14px; min-height: 100vh; }
+
+/* ═══════════ Layout ═══════════ */
+.header { background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%); color: #fff; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.header h1 { font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+.header .update-info { font-size: 12px; color: #8899bb; }
+.container { max-width: 1440px; margin: 0 auto; padding: 20px; }
+
+/* ═══════════ Tabs ═══════════ */
+.tabs { display: flex; gap: 0; background: #fff; border-radius: 8px 8px 0 0; box-shadow: 0 1px 3px rgba(0,0,0,.08); overflow: hidden; }
+.tab-btn { flex: 1; padding: 14px 20px; border: none; background: #f8f9fc; cursor: pointer; font-size: 14px; font-weight: 500; color: #667; transition: all .2s; border-bottom: 2px solid transparent; }
+.tab-btn:hover { background: #eef1f8; }
+.tab-btn.active { background: #fff; color: #1a3a6b; border-bottom-color: #1a3a6b; font-weight: 600; }
+.tab-content { display: none; background: #fff; border-radius: 0 0 8px 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-bottom: 20px; }
+.tab-content.active { display: block; }
+
+/* ═══════════ KPI Cards ═══════════ */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.kpi-card { background: #fff; border: 1px solid #e8ecf1; border-radius: 8px; padding: 16px 20px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.kpi-card .label { font-size: 13px; color: #889; margin-bottom: 6px; }
+.kpi-card .value { font-size: 26px; font-weight: 700; color: #1a1a2e; line-height: 1.2; }
+.kpi-card .value .unit { font-size: 14px; font-weight: 400; color: #889; margin-left: 2px; }
+.kpi-card .compare-row { display: flex; gap: 16px; margin-top: 8px; font-size: 12px; }
+.kpi-card .compare-item { display: flex; align-items: center; gap: 4px; }
+.tag-up { color: #22a67e; }
+.tag-down { color: #e74c3c; }
+.tag-neutral { color: #889; }
+.tag-target { color: #3a7bd5; }
+
+/* ═══════════ Section ═══════════ */
+.section { margin-bottom: 28px; }
+.section:last-child { margin-bottom: 0; }
+.section-title { font-size: 16px; font-weight: 600; color: #1a2a4a; margin-bottom: 14px; padding-left: 12px; border-left: 3px solid #1a3a6b; }
+.section-subtitle { font-size: 14px; font-weight: 500; color: #445; margin-bottom: 10px; }
+.chart-container { position: relative; height: 280px; margin-bottom: 10px; }
+
+/* ═══════════ Tables ═══════════ */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { background: #f5f7fa; color: #445; font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 2px solid #e0e4ea; white-space: nowrap; }
+tbody td { padding: 9px 12px; border-bottom: 1px solid #f0f2f5; }
+tbody tr:hover { background: #f8faff; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.font-mono { font-variant-numeric: tabular-nums; }
+.bold { font-weight: 600; }
+.sub-row td:first-child { padding-left: 28px; font-size: 12px; color: #667; }
+.total-row { background: #f8faff; font-weight: 600; }
+
+/* status tags */
+.tag-warn { background: #fff3e0; color: #e67e22; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+.tag-danger { background: #fce4e4; color: #c0392b; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+.tag-info { background: #e3f2fd; color: #1976d2; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+.tag-success { background: #e8f5e9; color: #22a67e; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+
+/* ═══════════ Profit Waterfall ═══════════ */
+.waterfall { display: flex; flex-direction: column; gap: 2px; margin: 16px 0; }
+.wf-item { display: flex; align-items: center; gap: 12px; }
+.wf-label { width: 160px; text-align: right; font-size: 13px; color: #445; flex-shrink: 0; }
+.wf-bar-wrap { flex: 1; height: 32px; position: relative; display: flex; align-items: center; }
+.wf-bar { height: 26px; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 600; color: #fff; min-width: 60px; justify-content: flex-end; transition: width .6s ease; }
+.wf-bar.positive { background: linear-gradient(90deg, #2ecc71, #22a67e); }
+.wf-bar.negative { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+.wf-bar.result { background: linear-gradient(90deg, #3a7bd5, #1a3a6b); }
+.wf-total { width: 160px; text-align: left; font-size: 13px; font-weight: 600; color: #1a3a6b; flex-shrink: 0; padding-left: 12px; }
+
+/* ═══════════ Sensitivity Box ═══════════ */
+.sensitivity-box { background: linear-gradient(135deg, #f8faff, #eef2f7); border: 1px solid #e0e4ea; border-radius: 8px; padding: 16px 20px; margin-top: 12px; }
+.sensitivity-box p { font-size: 13px; color: #445; margin-bottom: 6px; }
+.sensitivity-box p:last-child { margin-bottom: 0; }
+.sensitivity-box .highlight { color: #1a3a6b; font-weight: 600; }
+
+/* ═══════════ Market Share Chart (inline bar) ═══════════ */
+.share-bar-wrap { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+.share-bar-bg { flex: 1; height: 18px; background: #eef1f8; border-radius: 4px; overflow: hidden; }
+.share-bar-fill { height: 100%; border-radius: 4px; transition: width .5s; }
+
+/* ═══════════ Quick Stats ═══════════ */
+.quick-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.stat-item { background: #f8faff; border: 1px solid #e8ecf1; border-radius: 6px; padding: 12px 16px; }
+.stat-item .label { font-size: 12px; color: #889; }
+.stat-item .value { font-size: 18px; font-weight: 700; color: #1a2a4a; margin-top: 2px; }
+
+/* ═══════════ Responsive ═══════════ */
+@media (max-width: 1024px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .kpi-row { grid-template-columns: 1fr; } .tabs { flex-wrap: wrap; } .tab-btn { flex: 1 1 50%; font-size: 13px; padding: 10px; } .container { padding: 12px; } .tab-content { padding: 16px; } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ Header ═══════════ -->
+<div class="header">
+  <div>
+    <h1>短期意外健康险 · 经营数据看板</h1>
+    <div class="update-info">数据更新：2026-06-22 09:30 | 市场数据截至 2026Q1</div>
+  </div>
+  <div style="font-size:13px;color:#8899bb;">利润中心 · 意外健康险部</div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════ Tabs ═══════════ -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab(0)">📊 总览</button>
+  <button class="tab-btn" onclick="switchTab(1)">📋 承保分析</button>
+  <button class="tab-btn" onclick="switchTab(2)">🩺 理赔分析</button>
+  <button class="tab-btn" onclick="switchTab(3)">💰 损益分析</button>
+  <button class="tab-btn" onclick="switchTab(4)">🏢 市场对标</button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 1: 总览 -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <!-- 当日速报 -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="label">今日保费收入</div>
+      <div class="value">1,234<span class="unit">万元</span></div>
+      <div class="compare-row">
+        <span class="compare-item tag-up">↑ 15.3% vs 昨日</span>
+        <span class="compare-item tag-target">达成月目标 38%</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">本月累计保费</div>
+      <div class="value">3.2<span class="unit">亿元</span></div>
+      <div class="compare-row">
+        <span class="compare-item tag-up">↑ 8.7% vs 上月同期</span>
+        <span class="compare-item tag-target">达成月目标 41%</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">今日报案数</div>
+      <div class="value">127<span class="unit">件</span></div>
+      <div class="compare-row">
+        <span class="compare-item tag-up">↑ 5 vs 昨日</span>
+        <span class="compare-item tag-neutral">月均 145 件/日</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">本月赔付率</div>
+      <div class="value">32.5<span class="unit">%</span></div>
+      <div class="compare-row">
+        <span class="compare-item tag-down">↓ 1.2pp vs 上月</span>
+        <span class="compare-item tag-success">目标 ≤ 35% ✅</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 核心指标体系 -->
+  <div class="section">
+    <div class="section-title">核心指标体系</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>指标</th>
+            <th class="text-right">当前值</th>
+            <th class="text-right">vs 历史</th>
+            <th class="text-right">vs 目标</th>
+            <th class="text-right">vs 市场</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="bold">规模保费</td><td class="text-right font-mono">¥28.6 亿</td><td class="text-right"><span class="tag-up">↑ 12.5% YoY</span> <span class="tag-up">↑ 3.2% MoM</span></td><td class="text-right"><span class="tag-up">达成率 87%</span><br><span class="tag-neutral">缺口 ¥4.3 亿</span></td><td class="text-right"><span class="tag-info">市占率 6.8%</span><br><span class="tag-neutral">排名第 5</span></td></tr>
+          <tr><td class="bold">原保费收入</td><td class="text-right font-mono">¥26.1 亿</td><td class="text-right"><span class="tag-up">↑ 11.2% YoY</span></td><td class="text-right"><span class="tag-up">达成率 85%</span></td><td class="text-right"><span class="tag-up">跑赢行业 3.2pp</span></td></tr>
+          <tr><td class="bold">已赚保费</td><td class="text-right font-mono">¥24.3 亿</td><td class="text-right"><span class="tag-up">↑ 10.8% YoY</span></td><td class="text-right"><span class="tag-neutral">—</span></td><td class="text-right"><span class="tag-neutral">—</span></td></tr>
+          <tr><td class="bold">综合成本率</td><td class="text-right font-mono">87.3%</td><td class="text-right"><span class="tag-down">↑ 1.5pp YoY</span></td><td class="text-right"><span class="tag-success">目标 ≤ 89% ✅</span><br><span class="tag-neutral">领先 1.7pp</span></td><td class="text-right"><span class="tag-info">行业均值 91.2%</span><br><span class="tag-up">领先 3.9pp</span></td></tr>
+          <tr><td class="bold">赔付率</td><td class="text-right font-mono">35.2%</td><td class="text-right"><span class="tag-down">↑ 0.8pp YoY</span></td><td class="text-right"><span class="tag-success">目标 ≤ 36% ✅</span></td><td class="text-right"><span class="tag-info">行业均值 38.5%</span></td></tr>
+          <tr><td class="bold">费用率</td><td class="text-right font-mono">52.1%</td><td class="text-right"><span class="tag-up">↓ 0.7pp YoY</span></td><td class="text-right"><span class="tag-up">目标 ≤ 53% ✅</span></td><td class="text-right"><span class="tag-info">行业均值 52.7%</span></td></tr>
+          <tr><td class="bold">承保利润</td><td class="text-right font-mono">¥3.1 亿</td><td class="text-right"><span class="tag-up">↑ 6.9% YoY</span></td><td class="text-right"><span class="tag-up">达成率 82%</span></td><td class="text-right"><span class="tag-neutral">—</span></td></tr>
+          <tr><td class="bold">保单件数</td><td class="text-right font-mono">187.5 万件</td><td class="text-right"><span class="tag-up">↑ 15.3% YoY</span></td><td class="text-right"><span class="tag-up">达成率 91%</span></td><td class="text-right"><span class="tag-info">市占率 7.2%</span></td></tr>
+          <tr><td class="bold">年化新单保费 (ANP)</td><td class="text-right font-mono">¥8.7 亿</td><td class="text-right"><span class="tag-up">↑ 18.2% YoY</span></td><td class="text-right"><span class="tag-up">达成率 76%</span></td><td class="text-right"><span class="tag-neutral">—</span></td></tr>
+          <tr><td class="bold">保单续期率 (13M)</td><td class="text-right font-mono">88.6%</td><td class="text-right"><span class="tag-up">↑ 1.2pp YoY</span></td><td class="text-right"><span class="tag-success">目标 ≥ 87% ✅</span></td><td class="text-right"><span class="tag-info">行业均值 85.3%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 2: 承保分析 -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-1">
+  <!-- 保费收入趋势 -->
+  <div class="section">
+    <div class="section-title">保费收入趋势（最近 13 个月）</div>
+    <div class="chart-container"><canvas id="premiumTrendChart"></canvas></div>
+    <div style="font-size:12px;color:#889;margin-top:4px;">▎双柱：当月实际值 + 目标值 &nbsp;|&nbsp; 折线：去年同期 &nbsp;|&nbsp; 可下钻：渠道 / 产品 / 地区 / 新单续期</div>
+  </div>
+
+  <!-- 渠道分析 -->
+  <div class="section">
+    <div class="section-title">渠道分析</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>渠道</th><th class="text-right">保费（亿）</th><th class="text-right">占比</th><th class="text-right">同比</th><th class="text-right">环比</th><th class="text-right">目标达成</th><th class="text-right">费用率</th><th class="text-right">产能</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>个险</td><td class="text-right font-mono">8.5</td><td class="text-right">29.7%</td><td class="text-right tag-up">↑ 5.2%</td><td class="text-right tag-up">↑ 2.1%</td><td class="text-right tag-up">88%</td><td class="text-right font-mono">45.2%</td><td class="text-right font-mono">¥3.2 万/人</td></tr>
+          <tr><td>团险</td><td class="text-right font-mono">6.2</td><td class="text-right">21.7%</td><td class="text-right tag-up">↑ 8.9%</td><td class="text-right tag-up">↑ 1.5%</td><td class="text-right tag-up">92%</td><td class="text-right font-mono">28.6%</td><td class="text-right font-mono">¥8.6 万/单</td></tr>
+          <tr><td>银保</td><td class="text-right font-mono">7.8</td><td class="text-right">27.3%</td><td class="text-right tag-down">↓ 2.3%</td><td class="text-right tag-up">↑ 0.8%</td><td class="text-right tag-neutral">78%</td><td class="text-right font-mono">35.4%</td><td class="text-right font-mono">¥25.1 万/网点</td></tr>
+          <tr><td>互联网</td><td class="text-right font-mono">4.2</td><td class="text-right">14.7%</td><td class="text-right tag-up">↑ 35.6%</td><td class="text-right tag-up">↑ 6.3%</td><td class="text-right tag-up">105%</td><td class="text-right font-mono">18.2%</td><td class="text-right font-mono">¥0.8 万/访客</td></tr>
+          <tr><td>经代</td><td class="text-right font-mono">1.9</td><td class="text-right">6.6%</td><td class="text-right tag-up">↑ 12.1%</td><td class="text-right tag-up">↑ 3.2%</td><td class="text-right tag-up">95%</td><td class="text-right font-mono">42.8%</td><td class="text-right font-mono">¥5.7 万/人</td></tr>
+          <tr class="total-row"><td>合计</td><td class="text-right font-mono">28.6</td><td class="text-right">100%</td><td class="text-right tag-up">↑ 11.2%</td><td class="text-right tag-up">↑ 2.8%</td><td class="text-right tag-up">87%</td><td class="text-right font-mono">34.0%</td><td class="text-right font-mono">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:#889;margin-top:8px;">市场对标：互联网渠道行业占比 18.5% / 本公司排名第 4 / 渠道增速跑赢行业 8.2pp</div>
+  </div>
+
+  <!-- 产品分析 -->
+  <div class="section">
+    <div class="section-title">产品分析</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>产品类型</th><th class="text-right">保费（亿）</th><th class="text-right">占比</th><th class="text-right">同比</th><th class="text-right">件均保费</th><th class="text-right">赔付率</th><th class="text-right">目标达成</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="bold">意外险</td><td class="text-right font-mono">15.2</td><td class="text-right">53.1%</td><td class="text-right tag-up">↑ 6.5%</td><td class="text-right font-mono">¥280</td><td class="text-right font-mono tag-success">28.5%</td><td class="text-right tag-up">92%</td></tr>
+          <tr class="sub-row"><td>├ 个人意外</td><td class="text-right font-mono">7.8</td><td class="text-right">27.3%</td><td class="text-right tag-up">↑ 8.2%</td><td class="text-right font-mono">¥195</td><td class="text-right font-mono tag-success">26.1%</td><td class="text-right tag-up">94%</td></tr>
+          <tr class="sub-row"><td>├ 团体意外</td><td class="text-right font-mono">5.6</td><td class="text-right">19.6%</td><td class="text-right tag-up">↑ 4.5%</td><td class="text-right font-mono">¥420</td><td class="text-right font-mono tag-success">30.8%</td><td class="text-right tag-up">89%</td></tr>
+          <tr class="sub-row"><td>└ 旅行意外</td><td class="text-right font-mono">1.8</td><td class="text-right">6.3%</td><td class="text-right tag-up">↑ 6.8%</td><td class="text-right font-mono">¥85</td><td class="text-right font-mono tag-success">32.4%</td><td class="text-right tag-up">91%</td></tr>
+          <tr><td class="bold">健康险（短期）</td><td class="text-right font-mono">13.4</td><td class="text-right">46.9%</td><td class="text-right tag-up">↑ 17.8%</td><td class="text-right font-mono">¥520</td><td class="text-right font-mono tag-warn">42.8%</td><td class="text-right tag-up">82%</td></tr>
+          <tr class="sub-row"><td>├ 住院医疗</td><td class="text-right font-mono">6.8</td><td class="text-right">23.8%</td><td class="text-right tag-up">↑ 22.5%</td><td class="text-right font-mono">¥680</td><td class="text-right font-mono tag-warn">48.2%</td><td class="text-right tag-up">80%</td></tr>
+          <tr class="sub-row"><td>├ 门诊医疗</td><td class="text-right font-mono">2.5</td><td class="text-right">8.7%</td><td class="text-right tag-up">↑ 15.3%</td><td class="text-right font-mono">¥350</td><td class="text-right font-mono tag-danger">55.6%</td><td class="text-right tag-neutral">76%</td></tr>
+          <tr class="sub-row"><td>├ 重疾（短期）</td><td class="text-right font-mono">2.8</td><td class="text-right">9.8%</td><td class="text-right tag-up">↑ 12.6%</td><td class="text-right font-mono">¥1,200</td><td class="text-right font-mono tag-success">25.4%</td><td class="text-right tag-up">90%</td></tr>
+          <tr class="sub-row"><td>└ 护理/津贴</td><td class="text-right font-mono">1.3</td><td class="text-right">4.5%</td><td class="text-right tag-up">↑ 10.2%</td><td class="text-right font-mono">¥450</td><td class="text-right font-mono tag-success">32.1%</td><td class="text-right tag-up">85%</td></tr>
+          <tr class="total-row"><td>合计</td><td class="text-right font-mono">28.6</td><td class="text-right">100%</td><td class="text-right tag-up">↑ 11.2%</td><td class="text-right font-mono">¥380</td><td class="text-right font-mono">35.2%</td><td class="text-right tag-up">87%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 新单 vs 续期 -->
+  <div class="section">
+    <div class="section-title">新单 vs 续期结构</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>指标</th><th class="text-right">当期值</th><th class="text-right">同比</th><th class="text-right">环比</th><th class="text-right">目标</th><th class="text-right">市场参考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>新单保费占比</td><td class="text-right font-mono">36.8%</td><td class="text-right tag-up">↑ 2.3pp</td><td class="text-right tag-down">↓ 0.5pp</td><td class="text-right">≥ 35% ✅</td><td class="text-right font-mono">行业均值 33.2%</td></tr>
+          <tr><td>续期保费占比</td><td class="text-right font-mono">63.2%</td><td class="text-right tag-down">↓ 2.3pp</td><td class="text-right tag-up">↑ 0.5pp</td><td class="text-right">—</td><td class="text-right font-mono">行业均值 66.8%</td></tr>
+          <tr><td>续期率（13 个月）</td><td class="text-right font-mono">88.6%</td><td class="text-right tag-up">↑ 1.2pp</td><td class="text-right tag-up">↑ 0.3pp</td><td class="text-right">≥ 87% ✅</td><td class="text-right font-mono">Top3 均值 91.2%</td></tr>
+          <tr><td>续期率（25 个月）</td><td class="text-right font-mono">76.4%</td><td class="text-right tag-up">↑ 0.8pp</td><td class="text-right tag-neutral">持平</td><td class="text-right">≥ 75% ✅</td><td class="text-right font-mono">Top3 均值 80.5%</td></tr>
+          <tr><td>宽末续期率</td><td class="text-right font-mono">92.1%</td><td class="text-right tag-up">↑ 1.5pp</td><td class="text-right tag-up">↑ 0.6pp</td><td class="text-right">≥ 90% ✅</td><td class="text-right font-mono">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 3: 理赔分析 -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-2">
+  <!-- 核心理赔指标 -->
+  <div class="section">
+    <div class="section-title">核心理赔指标</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>指标</th><th class="text-right">当期值</th><th class="text-right">同比</th><th class="text-right">环比</th><th class="text-right">目标</th><th class="text-right">市场对标</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="bold">已报告赔案数</td><td class="text-right font-mono">28,642 件</td><td class="text-right tag-up">↑ 8.3%</td><td class="text-right tag-up">↑ 2.1%</td><td class="text-right">—</td><td class="text-right">—</td></tr>
+          <tr><td class="bold">已决赔案数</td><td class="text-right font-mono">26,105 件</td><td class="text-right tag-up">↑ 9.1%</td><td class="text-right tag-up">↑ 2.5%</td><td class="text-right">—</td><td class="text-right">—</td></tr>
+          <tr><td class="bold">未决赔案数</td><td class="text-right font-mono">4,823 件</td><td class="text-right tag-down">↑ 5.2%</td><td class="text-right tag-down">↑ 1.8%</td><td class="text-right tag-warn">≤ 4,500</td><td class="text-right">—</td></tr>
+          <tr><td class="bold">赔付金额</td><td class="text-right font-mono">¥8.56 亿</td><td class="text-right tag-up">↑ 12.4%</td><td class="text-right tag-up">↑ 3.6%</td><td class="text-right tag-warn">≤ ¥8.2 亿</td><td class="text-right">—</td></tr>
+          <tr><td class="bold">案均赔款</td><td class="text-right font-mono">¥3,280</td><td class="text-right tag-up">↑ 4.2%</td><td class="text-right tag-up">↑ 1.5%</td><td class="text-right">—</td><td class="text-right font-mono">行业均值 ¥3,560</td></tr>
+          <tr><td class="bold">出险率</td><td class="text-right font-mono">15.3‰</td><td class="text-right tag-down">↑ 0.6pp</td><td class="text-right tag-neutral">持平</td><td class="text-right">—</td><td class="text-right font-mono">行业均值 16.8‰</td></tr>
+          <tr><td class="bold">结案率</td><td class="text-right font-mono">84.4%</td><td class="text-right tag-up">↑ 0.6pp</td><td class="text-right tag-up">↑ 0.3pp</td><td class="text-right tag-success">≥ 83% ✅</td><td class="text-right font-mono">行业均值 82.1%</td></tr>
+          <tr><td class="bold">平均结案天数</td><td class="text-right font-mono">5.8 天</td><td class="text-right tag-up">↓ 0.5 天</td><td class="text-right tag-up">↓ 0.2 天</td><td class="text-right tag-success">≤ 7 天 ✅</td><td class="text-right font-mono">行业标杆 4.2 天</td></tr>
+          <tr><td class="bold">小额快赔占比</td><td class="text-right font-mono">72.5%</td><td class="text-right tag-up">↑ 3.2pp</td><td class="text-right tag-up">↑ 1.1pp</td><td class="text-right tag-success">≥ 70% ✅</td><td class="text-right font-mono">行业标杆 78%</td></tr>
+          <tr><td class="bold">理赔获客率</td><td class="text-right font-mono">12.3%</td><td class="text-right tag-up">↑ 0.8pp</td><td class="text-right tag-up">↑ 0.4pp</td><td class="text-right tag-neutral">≥ 15%</td><td class="text-right">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 赔付率趋势 -->
+  <div class="section">
+    <div class="section-title">赔付率趋势</div>
+    <div class="chart-container"><canvas id="lossRatioTrendChart"></canvas></div>
+  </div>
+
+  <!-- 理赔时效 -->
+  <div class="section">
+    <div class="section-title">理赔时效分析</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>环节</th><th class="text-right">当期（天）</th><th class="text-right">目标（天）</th><th class="text-right">同比变化</th><th class="text-right">行业标杆</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>报案 → 立案</td><td class="text-right font-mono">1.2</td><td class="text-right font-mono">≤ 2.0</td><td class="text-right tag-up">↓ 0.3</td><td class="text-right font-mono">0.8</td></tr>
+          <tr><td>立案 → 结案</td><td class="text-right font-mono">4.6</td><td class="text-right font-mono">≤ 5.0</td><td class="text-right tag-up">↓ 0.2</td><td class="text-right font-mono">3.4</td></tr>
+          <tr><td>资料齐全 → 结案</td><td class="text-right font-mono">2.8</td><td class="text-right font-mono">≤ 3.0</td><td class="text-right tag-up">↓ 0.4</td><td class="text-right font-mono">2.1</td></tr>
+          <tr class="total-row"><td>全流程</td><td class="text-right font-mono">5.8</td><td class="text-right font-mono">≤ 7.0</td><td class="text-right tag-up">↓ 0.5</td><td class="text-right font-mono">4.2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 异常理赔预警 -->
+  <div class="section">
+    <div class="section-title">异常理赔预警</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>类型</th><th class="text-right">涉及金额</th><th class="text-right">件数</th><th class="text-right">同比</th><th class="text-right">环比</th><th>状态</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>高频理赔（单人年 ≥ 3 次）</td><td class="text-right font-mono">¥246 万</td><td class="text-right font-mono">187 件</td><td class="text-right tag-up">+15.3%</td><td class="text-right tag-up">+4.2%</td><td><span class="tag-warn">⚠ 监控中</span></td></tr>
+          <tr><td>大额理赔（单案 ≥ 10 万）</td><td class="text-right font-mono">¥1,280 万</td><td class="text-right font-mono">42 件</td><td class="text-right tag-up">+22.5%</td><td class="text-right tag-up">+8.6%</td><td><span class="tag-info">🔍 调查中</span></td></tr>
+          <tr><td>异地理赔（投保≠出险地）</td><td class="text-right font-mono">¥185 万</td><td class="text-right font-mono">156 件</td><td class="text-right tag-up">+5.8%</td><td class="text-right tag-up">+1.2%</td><td><span class="tag-warn">⚠ 监控中</span></td></tr>
+          <tr><td>短期出险（投保 15 天内）</td><td class="text-right font-mono">¥92 万</td><td class="text-right font-mono">38 件</td><td class="text-right tag-down">+45.2%</td><td class="text-right tag-down">+18.5%</td><td><span class="tag-danger">🚨 已预警</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:#889;margin-top:8px;">规则说明：高频=单人年理赔≥3次 | 大额=单案≥¥10万 | 异地=投保地与出险地跨省 | 短期=投保后15天内出险</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 4: 损益分析 -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-3">
+  <!-- 承保利润瀑布图 -->
+  <div class="section">
+    <div class="section-title">承保利润拆解</div>
+    <div class="waterfall">
+      <div class="wf-item"><span class="wf-label">已赚保费</span><div class="wf-bar-wrap"><div class="wf-bar positive" style="width:100%;">¥24.3 亿</div></div><span class="wf-total"></span></div>
+      <div class="wf-item"><span class="wf-label">减：已发生赔款</span><div class="wf-bar-wrap"><div class="wf-bar negative" style="width:75%;">-¥8.56 亿（赔付率 35.2%）</div></div><span class="wf-total"></span></div>
+      <div class="wf-item"><span class="wf-label">减：手续费及佣金</span><div class="wf-bar-wrap"><div class="wf-bar negative" style="width:62%;">-¥5.1 亿（佣金率 21.0%）</div></div><span class="wf-total"></span></div>
+      <div class="wf-item"><span class="wf-label">减：业务及管理费</span><div class="wf-bar-wrap"><div class="wf-bar negative" style="width:38%;">-¥3.2 亿（管理费率 13.2%）</div></div><span class="wf-total"></span></div>
+      <div class="wf-item"><span class="wf-label">减：保险责任准备金</span><div class="wf-bar-wrap"><div class="wf-bar negative" style="width:12%;">-¥0.9 亿</div></div><span class="wf-total"></span></div>
+      <div class="wf-item"><span class="wf-label">减：税金及附加</span><div class="wf-bar-wrap"><div class="wf-bar negative" style="width:6%;">-¥0.44 亿</div></div><span class="wf-total"></span></div>
+      <div class="wf-item"><span class="wf-label" style="font-weight:700;color:#1a3a6b;">承保利润</span><div class="wf-bar-wrap"><div class="wf-bar result" style="width:65%;">¥6.1 亿（利润率 25.1%）</div></div>
+        <span class="wf-total" style="display:flex;flex-direction:column;gap:1px;">
+          <span style="font-size:11px;color:#22a67e;">↑ 去年 ¥4.8 亿 / 利润率 22.3%</span>
+          <span style="font-size:11px;color:#3a7bd5;">🎯 预算 ¥5.6 亿 / 达成率 109%</span>
+          <span style="font-size:11px;color:#889;">行业平均利润率 18.5% / 领先 6.6pp</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 综合成本率拆解 -->
+  <div class="section">
+    <div class="section-title">综合成本率拆解</div>
+    <div class="chart-container" style="height:200px;"><canvas id="combinedRatioChart"></canvas></div>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <thead>
+          <tr><th>指标</th><th class="text-right">当期</th><th class="text-right">预算</th><th class="text-right">同比</th><th class="text-right">环比</th><th class="text-right">行业均值</th><th class="text-right">行业 Top3</th></tr>
+        </thead>
+        <tbody>
+          <tr class="total-row"><td class="bold">综合成本率</td><td class="text-right font-mono bold">87.3%</td><td class="text-right font-mono">≤ 89%</td><td class="text-right tag-down">↑ 1.5pp</td><td class="text-right tag-up">↓ 0.3pp</td><td class="text-right font-mono">91.2%</td><td class="text-right font-mono">85.6%</td></tr>
+          <tr><td>├ 赔付率</td><td class="text-right font-mono">35.2%</td><td class="text-right font-mono">≤ 36%</td><td class="text-right tag-down">↑ 0.8pp</td><td class="text-right tag-up">↓ 0.2pp</td><td class="text-right font-mono">38.5%</td><td class="text-right font-mono">34.8%</td></tr>
+          <tr><td>├ 综合费用率</td><td class="text-right font-mono">52.1%</td><td class="text-right font-mono">≤ 53%</td><td class="text-right tag-up">↓ 0.7pp</td><td class="text-right tag-up">↓ 0.1pp</td><td class="text-right font-mono">52.7%</td><td class="text-right font-mono">50.8%</td></tr>
+          <tr class="sub-row"><td>│ ├ 手续费及佣金率</td><td class="text-right font-mono">21.0%</td><td class="text-right font-mono">≤ 22%</td><td class="text-right tag-up">↓ 0.5pp</td><td class="text-right tag-up">↓ 0.2pp</td><td class="text-right font-mono">21.5%</td><td class="text-right font-mono">20.2%</td></tr>
+          <tr class="sub-row"><td>│ ├ 业务及管理费率</td><td class="text-right font-mono">13.2%</td><td class="text-right font-mono">≤ 14%</td><td class="text-right tag-up">↓ 0.3pp</td><td class="text-right tag-neutral">持平</td><td class="text-right font-mono">13.8%</td><td class="text-right font-mono">12.5%</td></tr>
+          <tr class="sub-row"><td>│ └ 保险保障基金/监管费率</td><td class="text-right font-mono">17.9%</td><td class="text-right font-mono">≤ 17%</td><td class="text-right tag-down">↑ 0.1pp</td><td class="text-right tag-up">↓ 0.1pp</td><td class="text-right font-mono">17.4%</td><td class="text-right font-mono">18.1%</td></tr>
+          <tr class="total-row"><td class="bold">承保利润率</td><td class="text-right font-mono bold">12.7%</td><td class="text-right font-mono">≥ 11%</td><td class="text-right tag-down">↑ 1.5pp</td><td class="text-right tag-up">↓ 0.3pp</td><td class="text-right font-mono">8.8%</td><td class="text-right font-mono">14.4%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 费用明细 -->
+  <div class="section">
+    <div class="section-title">费用明细</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>费用科目</th><th class="text-right">当期（亿）</th><th class="text-right">占保费比</th><th class="text-right">预算（亿）</th><th class="text-right">同比</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>手续费支出</td><td class="text-right font-mono">2.85</td><td class="text-right font-mono">11.7%</td><td class="text-right font-mono">3.10</td><td class="text-right tag-up">↑ 5.2%</td></tr>
+          <tr><td>佣金支出</td><td class="text-right font-mono">2.25</td><td class="text-right font-mono">9.3%</td><td class="text-right font-mono">2.40</td><td class="text-right tag-up">↑ 6.8%</td></tr>
+          <tr><td>职工薪酬</td><td class="text-right font-mono">1.86</td><td class="text-right font-mono">7.7%</td><td class="text-right font-mono">1.95</td><td class="text-right tag-up">↑ 4.5%</td></tr>
+          <tr><td>职场租金</td><td class="text-right font-mono">0.42</td><td class="text-right font-mono">1.7%</td><td class="text-right font-mono">0.45</td><td class="text-right tag-up">↑ 2.1%</td></tr>
+          <tr><td>技术/系统</td><td class="text-right font-mono">0.38</td><td class="text-right font-mono">1.6%</td><td class="text-right font-mono">0.50</td><td class="text-right tag-up">↑ 15.8%</td></tr>
+          <tr><td>市场营销</td><td class="text-right font-mono">0.65</td><td class="text-right font-mono">2.7%</td><td class="text-right font-mono">0.80</td><td class="text-right tag-up">↑ 12.6%</td></tr>
+          <tr><td>其他管理费</td><td class="text-right font-mono">0.46</td><td class="text-right font-mono">1.9%</td><td class="text-right font-mono">0.50</td><td class="text-right tag-up">↑ 3.8%</td></tr>
+          <tr class="total-row"><td>费用合计</td><td class="text-right font-mono bold">8.87</td><td class="text-right font-mono bold">36.5%</td><td class="text-right font-mono bold">9.70</td><td class="text-right tag-up">↑ 5.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 边际分析 -->
+  <div class="section">
+    <div class="section-title">利润敏感性分析</div>
+    <div class="sensitivity-box">
+      <p>🔺 如果 <strong>赔付率</strong> 上升 1pp → 承保利润减少 <span class="highlight">¥2,430 万</span></p>
+      <p>🔺 如果 <strong>费用率</strong> 上升 1pp → 承保利润减少 <span class="highlight">¥2,430 万</span></p>
+      <p>🔺 如果 <strong>保费增长</strong> 10% → 承保利润增加 <span class="highlight">¥6,100 万</span></p>
+      <p style="margin-top:8px;padding-top:8px;border-top:1px solid #e0e4ea;">📊 当前距亏损的安全边际：<span class="highlight">赔付率上限 47.8%（当前 35.2%）</span> | <span class="highlight">综合成本率上限 100%（当前 87.3%）</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 5: 市场对标 -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-4">
+  <!-- 市场地位速览 -->
+  <div class="section">
+    <div class="section-title">市场地位速览</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>维度</th><th class="text-right">本公司</th><th class="text-center">排名</th><th class="text-right">Top1</th><th class="text-right">Top3 均值</th><th class="text-right">行业均值</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="bold">短期意外险保费</td><td class="text-right font-mono">¥15.2 亿</td><td class="text-center"><span class="tag-info">#4</span></td><td class="text-right font-mono">¥28.6 亿</td><td class="text-right font-mono">¥22.4 亿</td><td class="text-right font-mono">¥8.5 亿</td></tr>
+          <tr><td class="bold">短期健康险保费</td><td class="text-right font-mono">¥13.4 亿</td><td class="text-center"><span class="tag-info">#5</span></td><td class="text-right font-mono">¥32.1 亿</td><td class="text-right font-mono">¥24.8 亿</td><td class="text-right font-mono">¥7.2 亿</td></tr>
+          <tr class="total-row"><td class="bold">合计规模</td><td class="text-right font-mono bold">¥28.6 亿</td><td class="text-center"><span class="tag-info">#5</span></td><td class="text-right font-mono bold">¥58.4 亿</td><td class="text-right font-mono bold">¥45.6 亿</td><td class="text-right font-mono bold">¥15.7 亿</td></tr>
+          <tr><td>市场份额</td><td class="text-right font-mono">6.8%</td><td class="text-center"><span class="tag-info">#5</span></td><td class="text-right font-mono">13.9%</td><td class="text-right font-mono">10.9%</td><td class="text-right">—</td></tr>
+          <tr><td>保费增速</td><td class="text-right font-mono tag-up">11.2%</td><td class="text-center"><span class="tag-warn">#7</span></td><td class="text-right font-mono tag-up">18.5%</td><td class="text-right font-mono tag-up">14.2%</td><td class="text-right font-mono tag-up">8.0%</td></tr>
+          <tr><td>综合成本率</td><td class="text-right font-mono tag-success">87.3%</td><td class="text-center"><span class="tag-success">#3</span></td><td class="text-right font-mono">84.2%</td><td class="text-right font-mono">85.6%</td><td class="text-right font-mono">91.2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 竞品追踪 -->
+  <div class="section">
+    <div class="section-title">竞品追踪矩阵</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>竞品公司</th><th class="text-right">规模保费（亿）</th><th class="text-right">同比增速</th><th class="text-right">市场份额</th><th class="text-right">综合成本率</th><th>战略动向</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>人保财</td><td class="text-right font-mono">58.4</td><td class="text-right tag-up">↑ 8.5%</td><td class="text-right font-mono">13.9%</td><td class="text-right font-mono tag-success">84.2%</td><td>加大互联网健康险投放，推出"保网"系列</td></tr>
+          <tr><td>平安产</td><td class="text-right font-mono">52.6</td><td class="text-right tag-up">↑ 12.3%</td><td class="text-right font-mono">12.5%</td><td class="text-right font-mono tag-success">85.8%</td><td>AI 理赔全流程覆盖，小额案件 1 小时到账</td></tr>
+          <tr><td>太保产</td><td class="text-right font-mono">35.2</td><td class="text-right tag-up">↑ 10.6%</td><td class="text-right font-mono">8.4%</td><td class="text-right font-mono tag-success">86.5%</td><td>团险渠道下沉，布局县域市场</td></tr>
+          <tr><td>国寿财</td><td class="text-right font-mono">30.8</td><td class="text-right tag-up">↑ 6.2%</td><td class="text-right font-mono">7.3%</td><td class="text-right font-mono tag-warn">90.3%</td><td>代理人渠道转型，短期健康险承保收紧</td></tr>
+          <tr><td>中华联合</td><td class="text-right font-mono">22.5</td><td class="text-right tag-up">↑ 14.8%</td><td class="text-right font-mono">5.4%</td><td class="text-right font-mono tag-warn">92.6%</td><td>全省通赔提速，中西部市场份额提升</td></tr>
+          <tr class="total-row"><td>本公司</td><td class="text-right font-mono bold">28.6</td><td class="text-right tag-up bold">↑ 11.2%</td><td class="text-right font-mono bold">6.8%</td><td class="text-right font-mono tag-success bold">87.3%</td><td>互联网渠道增速 35.6%，住院医疗险为核心增长点</td></tr>
+          <tr><td class="bold">Top5 合计</td><td class="text-right font-mono bold">199.5</td><td class="text-right tag-up bold">↑ 9.8%</td><td class="text-right font-mono bold">47.5%</td><td class="text-right">—</td><td>行业集中度 CR5 ↑ 0.8pp YoY</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 分产品市场对标 -->
+  <div class="section">
+    <div class="section-title">分产品市场对标</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>产品</th><th class="text-right">本公司保费（亿）</th><th class="text-right">市占率</th><th class="text-center">排名</th><th class="text-right">市场增速</th><th class="text-right">本公司增速</th><th class="text-right">增速差</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>个人意外险</td><td class="text-right font-mono">7.8</td><td class="text-right font-mono">7.5%</td><td class="text-center"><span class="tag-info">#4</span></td><td class="text-right font-mono tag-up">6.2%</td><td class="text-right font-mono tag-up">8.2%</td><td class="text-right tag-up">+2.0pp</td></tr>
+          <tr><td>团体意外险</td><td class="text-right font-mono">5.6</td><td class="text-right font-mono">5.8%</td><td class="text-center"><span class="tag-warn">#6</span></td><td class="text-right font-mono tag-up">4.8%</td><td class="text-right font-mono tag-up">4.5%</td><td class="text-right tag-down">-0.3pp</td></tr>
+          <tr><td>住院医疗险</td><td class="text-right font-mono">6.8</td><td class="text-right font-mono">6.2%</td><td class="text-center"><span class="tag-info">#5</span></td><td class="text-right font-mono tag-up">18.5%</td><td class="text-right font-mono tag-up">22.5%</td><td class="text-right tag-up">+4.0pp</td></tr>
+          <tr><td>门诊医疗险</td><td class="text-right font-mono">2.5</td><td class="text-right font-mono">5.1%</td><td class="text-center"><span class="tag-info">#5</span></td><td class="text-right font-mono tag-up">12.6%</td><td class="text-right font-mono tag-up">15.3%</td><td class="text-right tag-up">+2.7pp</td></tr>
+          <tr><td>短期重疾险</td><td class="text-right font-mono">2.8</td><td class="text-right font-mono">8.8%</td><td class="text-center"><span class="tag-info">#3</span></td><td class="text-right font-mono tag-up">8.5%</td><td class="text-right font-mono tag-up">12.6%</td><td class="text-right tag-up">+4.1pp</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 市场趋势图 -->
+  <div class="section">
+    <div class="section-title">短期意外健康险市场趋势</div>
+    <div class="chart-container"><canvas id="marketTrendChart"></canvas></div>
+    <div style="margin-top:12px;font-size:13px;color:#445;line-height:1.8;">
+      <strong>关键趋势：</strong><br>
+      1️⃣ 短期健康险增速放缓，从 30%+ 降至 10-15%，市场进入成熟期<br>
+      2️⃣ 互联网渠道占比持续提升，短期健康险线上渗透率已达 18.5%<br>
+      3️⃣ 监管趋严，保证续保、费率可调成为合规重点，中小公司承压<br>
+      4️⃣ 头部集中度 CR5 = 47.5%，较去年上升 0.8pp，市场加速集中
+    </div>
+  </div>
+
+  <!-- 渠道竞争力 -->
+  <div class="section">
+    <div class="section-title">渠道竞争力对标</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>渠道</th><th class="text-right">本公司占比</th><th class="text-right">行业占比</th><th class="text-right">本公司增速</th><th class="text-right">行业增速</th><th class="text-right">本公司效率</th><th class="text-right">行业效率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>个险</td><td class="text-right font-mono">29.7%</td><td class="text-right font-mono">32.5%</td><td class="text-right tag-up">5.2%</td><td class="text-right tag-up">3.8%</td><td class="text-right font-mono">¥3.2 万/人</td><td class="text-right font-mono">¥3.5 万/人</td></tr>
+          <tr><td>团险</td><td class="text-right font-mono">21.7%</td><td class="text-right font-mono">18.6%</td><td class="text-right tag-up">8.9%</td><td class="text-right tag-up">6.5%</td><td class="text-right font-mono">¥8.6 万/单</td><td class="text-right font-mono">¥7.8 万/单</td></tr>
+          <tr><td>银保</td><td class="text-right font-mono">27.3%</td><td class="text-right font-mono">25.8%</td><td class="text-right tag-down">-2.3%</td><td class="text-right tag-up">1.2%</td><td class="text-right font-mono">¥25.1 万/网点</td><td class="text-right font-mono">¥22.6 万/网点</td></tr>
+          <tr><td>互联网</td><td class="text-right font-mono">14.7%</td><td class="text-right font-mono">18.5%</td><td class="text-right tag-up">35.6%</td><td class="text-right tag-up">22.8%</td><td class="text-right font-mono">¥0.8 万/访客</td><td class="text-right font-mono">¥1.1 万/访客</td></tr>
+          <tr><td>经代</td><td class="text-right font-mono">6.6%</td><td class="text-right font-mono">4.6%</td><td class="text-right tag-up">12.1%</td><td class="text-right tag-up">8.5%</td><td class="text-right font-mono">¥5.7 万/人</td><td class="text-right font-mono">¥5.2 万/人</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ═══════════════ Tab Switching ═══════════════
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  document.getElementById('tab-' + idx).classList.add('active');
+  // Resize charts to render correctly when tab becomes visible
+  setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 50);
+}
+
+// ═══════════════ Color Palette ═══════════════
+const COLORS = {
+  blue: '#1a3a6b', lightBlue: '#3a7bd5', paleBlue: '#5b9bd5',
+  green: '#22a67e', red: '#e74c3c', orange: '#e67e22',
+  grey: '#8899bb', lightGrey: '#e0e4ea',
+};
+
+// ═══════════════ Chart: Premium Trend ═══════════════
+new Chart(document.getElementById('premiumTrendChart'), {
+  type: 'bar',
+  data: {
+    labels: ['6月','7月','8月','9月','10月','11月','12月','1月','2月','3月','4月','5月','6月'],
+    datasets: [
+      { label: '实际保费（亿）', data: [2.1,2.3,2.2,2.4,2.5,2.3,2.8,2.6,2.2,2.9,3.0,3.1,3.2],
+        backgroundColor: COLORS.lightBlue, borderRadius: 3 },
+      { label: '目标保费（亿）', data: [2.3,2.4,2.4,2.5,2.6,2.6,2.7,2.8,2.8,2.9,3.0,3.0,3.1],
+        backgroundColor: 'rgba(231,76,60,0.15)', borderColor: COLORS.red, borderWidth: 1, borderRadius: 3,
+        borderSkipped: false },
+      { label: '去年同期（亿）', data: [1.8,1.9,1.9,2.0,2.1,2.0,2.4,2.2,1.9,2.5,2.6,2.7,2.8],
+        type: 'line', borderColor: COLORS.green, backgroundColor: 'transparent', pointBackgroundColor: COLORS.green,
+        pointRadius: 3, borderWidth: 2, tension: 0.3, fill: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 16 } } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#f0f2f5' }, ticks: { callback: v => v + '亿' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ═══════════════ Chart: Loss Ratio Trend ═══════════════
+new Chart(document.getElementById('lossRatioTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    datasets: [
+      { label: '当月赔付率', data: [34.8,36.2,35.5,34.2,35.8,35.2,33.8,34.5,35.1,34.6,35.3,34.8],
+        borderColor: COLORS.lightBlue, backgroundColor: 'rgba(58,123,213,0.08)', pointBackgroundColor: COLORS.lightBlue,
+        pointRadius: 4, borderWidth: 2.5, tension: 0.3, fill: true },
+      { label: '累计赔付率', data: [34.8,35.5,35.5,35.2,35.3,35.2,35.0,34.9,35.0,34.9,35.0,34.9],
+        borderColor: COLORS.blue, backgroundColor: 'transparent', pointBackgroundColor: COLORS.blue,
+        pointRadius: 4, borderWidth: 2.5, tension: 0.3, fill: false },
+      { label: '行业均值', data: [38.8,39.2,39.0,38.5,38.8,38.5,38.2,38.4,38.6,38.3,38.5,38.2],
+        borderColor: COLORS.grey, borderDash: [6,4], backgroundColor: 'transparent', borderWidth: 1.5,
+        pointRadius: 0, tension: 0.3, fill: false },
+      { label: '目标线 36%', data: Array(12).fill(36),
+        borderColor: COLORS.red, borderDash: [4,4], backgroundColor: 'transparent', borderWidth: 1.5,
+        pointRadius: 0, tension: 0, fill: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 16 } } },
+    scales: {
+      y: { min: 25, max: 45, grid: { color: '#f0f2f5' }, ticks: { callback: v => v + '%' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ═══════════════ Chart: Combined Ratio ═══════════════
+new Chart(document.getElementById('combinedRatioChart'), {
+  type: 'bar',
+  data: {
+    labels: ['综合成本率', '赔付率', '综合费用率'],
+    datasets: [
+      { label: '当期', data: [87.3, 35.2, 52.1], backgroundColor: [COLORS.lightBlue, COLORS.green, COLORS.orange], borderRadius: 3 },
+      { label: '预算目标', data: [89, 36, 53], backgroundColor: 'rgba(231,76,60,0.15)', borderColor: COLORS.red, borderWidth: 1, borderRadius: 3, borderSkipped: false },
+      { label: '行业均值', data: [91.2, 38.5, 52.7], backgroundColor: 'rgba(136,153,187,0.25)', borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 16 } } },
+    scales: {
+      y: { beginAtZero: true, max: 100, grid: { color: '#f0f2f5' }, ticks: { callback: v => v + '%' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ═══════════════ Chart: Market Trend ═══════════════
+new Chart(document.getElementById('marketTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['2020','2021','2022','2023','2024','2025','2026Q1'],
+    datasets: [
+      { label: '市场规模（亿元）', data: [1850, 2100, 2380, 2650, 2850, 3050, 3150],
+        borderColor: COLORS.grey, backgroundColor: 'rgba(136,153,187,0.08)',
+        borderWidth: 2, tension: 0.3, fill: true, pointRadius: 4, pointBackgroundColor: COLORS.grey },
+      { label: '本公司规模（亿元）', data: [12.5, 15.8, 18.2, 21.5, 24.8, 28.6, 30.2],
+        borderColor: COLORS.lightBlue, backgroundColor: 'rgba(58,123,213,0.08)',
+        borderWidth: 2.5, tension: 0.3, fill: true, pointRadius: 4, pointBackgroundColor: COLORS.lightBlue }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 16 } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + (ctx.datasetIndex === 0 ? '亿' : '亿') } }
+    },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#f0f2f5' }, ticks: { callback: v => v + (v > 100 ? '亿' : '亿') } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,17 +1,25 @@
 {
   "name": "tour-planner",
-  "displayName": "旅游路线规划",
-  "version": "1.0.0",
-  "description": "根据用户输入的一系列地名，自动规划驾车路线并估算每段行程的耗时。",
+  "displayName": "智能旅行规划师",
+  "version": "3.0.0",
+  "description": "全链路智能旅行规划产品。覆盖行程规划、交通方案比选、预算管理、住宿推荐、景点与美食指南、天气与季节适配、文化贴士、打包清单等完整旅行决策链路。输入目的地、天数、偏好即可获得完整旅行方案。",
   "category": "life",
-  "author": "Gemini",
+  "author": "Skill Space",
   "triggers": [
-    "规划路线",
-    "行程",
     "旅游计划",
-    "自驾"
+    "行程规划",
+    "旅行攻略",
+    "自驾路线",
+    "自由行",
+    "度假",
+    "出游",
+    "旅行",
+    "出差行程",
+    "路线",
+    "规划路线"
   ],
   "allowedTools": [
-    "WebSearch"
+    "WebSearch",
+    "WebFetch"
   ]
 }

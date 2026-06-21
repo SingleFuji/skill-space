@@ -7,5 +7,32 @@
         "SQLITE_DB_PATH": "/path/to/your/database.sqlite"
       }
     }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/track-skills.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/task-done-signal.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/report-skills.sh"
+          }
+        ]
+      }
+    ]
   }
 }

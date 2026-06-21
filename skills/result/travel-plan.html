@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深圳→甘南+九寨沟 9日自驾行程</title>
+<style>
+  :root {
+    --primary: #1a5c2a;
+    --accent: #e8a838;
+    --bg: #faf8f3;
+    --card: #ffffff;
+    --text: #2d2d2d;
+    --muted: #6b7280;
+    --border: #e5e0d5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .page { max-width: 900px; margin: 0 auto; }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #1a5c2a 0%, #2d8a4e 50%, #e8a838 100%);
+    color: #fff;
+    padding: 80px 40px;
+    text-align: center;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before { content: "🏔️"; position: absolute; top: 20px; left: 30px; font-size: 48px; opacity: 0.3; }
+  .cover::after { content: "🌊"; position: absolute; bottom: 20px; right: 30px; font-size: 48px; opacity: 0.3; }
+  .cover h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; letter-spacing: 4px; }
+  .cover .sub { font-size: 18px; opacity: 0.9; margin-bottom: 24px; }
+  .cover .route-line { font-size: 14px; opacity: 0.8; margin-bottom: 20px; letter-spacing: 2px; }
+  .cover .meta { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 14px; opacity: 0.85; }
+  .cover .meta span { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 20px; }
+  .cover .tag-new { background: #ff6b35; color: #fff; padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; margin-left: 4px; }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 14px;
+    margin: 32px 0 16px;
+  }
+  .sub-section-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #444;
+    margin: 20px 0 10px;
+  }
+  .divider { border: none; border-top: 2px solid var(--border); margin: 36px 0; }
+  .divider-light { border: none; border-top: 1px dashed var(--border); margin: 20px 0; }
+
+  /* Cards */
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    break-inside: avoid;
+  }
+  .day-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 10px; }
+  .day-card h3 small { font-weight: 400; font-size: 14px; color: var(--muted); margin-left: 8px; }
+  .day-card .route-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .day-card .route-tag.blue { background: #3b82f6; }
+  .day-card .route-tag.green { background: #22c55e; }
+  table.day-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  table.day-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #f0ece3;
+    vertical-align: top;
+  }
+  table.day-table td:first-child {
+    width: 75px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  table.day-table td:nth-child(2) { width: 100%; }
+  table.day-table tr:last-child td { border-bottom: none; }
+
+  /* Info Grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .info-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .info-item .label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .info-item .value { font-size: 15px; font-weight: 600; }
+
+  /* Boxes */
+  .rec-box {
+    background: #f0f7ff;
+    border: 1px solid #bddbff;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .rec-box strong { color: var(--primary); }
+  .rec-box .rec-item { margin: 4px 0; }
+  .rec-box .price { color: var(--muted); font-size: 13px; }
+
+  .tip-box {
+    background: #fef9e7;
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .warn-box {
+    background: #fde8e8;
+    border-left: 4px solid #e53e3e;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .success-box {
+    background: #e6f7e6;
+    border-left: 4px solid #22c55e;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+
+  /* Budget Table */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+  .budget-table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .budget-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .budget-table tr:last-child td { border-bottom: 2px solid var(--primary); font-weight: 700; }
+
+  /* Packing */
+  .packing {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .packing-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .cover { border-radius: 0; }
+    .day-card { break-inside: avoid; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Cover -->
+<div class="cover">
+  <h1>🗺️ 深圳→甘南+九寨沟 9日自驾</h1>
+  <div class="sub">深圳 ✈️ 兰州 → 扎尕那 → 郎木寺 → 若尔盖 → 九曲黄河 → 九寨沟 → 成都 ✈️ 深圳</div>
+  <div class="route-line">🚀 九绵高速2025年9月29日全线通车 · 九寨沟→成都仅4h</div>
+  <div class="meta">
+    <span>📅 9/25(四)—10/3(五)</span>
+    <span>👫 2人</span>
+    <span>🚗 自驾SUV</span>
+    <span>💰 约¥10,500</span>
+  </div>
+</div>
+
+<!-- Overview -->
+<div class="info-grid">
+  <div class="info-item"><div class="label">总里程（自驾段）</div><div class="value">≈ 1,300 km</div></div>
+  <div class="info-item"><div class="label">总飞行段</div><div class="value">深圳↔兰州·成都↔深圳</div></div>
+  <div class="info-item"><div class="label">海拔范围</div><div class="value">500 - 3,600 m</div></div>
+  <div class="info-item"><div class="label">最佳时节</div><div class="value">🍂 9月底秋色正浓</div></div>
+</div>
+
+<hr class="divider">
+
+<!-- Day 1 -->
+<div class="day-card">
+  <h3>Day 1 · 9/25 周四 <small>深圳 ✈️ 兰州 🚗 合作市</small></h3>
+  <span class="route-tag blue">✈️ 深圳→兰州 3h | 🚗 兰州→合作 3h</span>
+  <table class="day-table">
+    <tr><td>06:10-09:30</td><td>深圳宝安→兰州中川 ✈️（推荐东海DZ6211/南航CZ5647）</td></tr>
+    <tr><td>09:30-10:30</td><td>兰州中川机场取车（提前APP预订SUV）</td></tr>
+    <tr><td>10:30-14:00</td><td>兰州→合作市（G75兰海+G1816乌玛高速，3h）</td></tr>
+    <tr><td>14:00-15:00</td><td>合作市午餐</td></tr>
+    <tr><td>15:00-16:30</td><td>参观米拉日巴佛阁（九层佛阁，藏传佛教瑰宝）</td></tr>
+    <tr><td>17:00</td><td>入住酒店，适应海拔（合作市海拔3,000m）</td></tr>
+    <tr><td>晚上</td><td>晚餐后早休息，为明天行程蓄力</td></tr>
+  </table>
+
+  <div class="sub-section-title">🏨 住宿推荐 · 合作市</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>1. 合作羚城大草原国际饭店</strong> — ¥250-350/晚 <span class="price">| 供氧房+智能设备+130车位，初上高原首选</span></div>
+    <div class="rec-item"><strong>2. 合作颐和大酒店</strong> — ¥220-300/晚 <span class="price">| 老牌高评分，房间45㎡+，停车方便</span></div>
+    <div class="rec-item"><strong>3. 途客轻居酒店(合作店)</strong> — ¥180-250/晚 <span class="price">| 2025年4月新开业，性价比高</span></div>
+  </div>
+  <div class="sub-section-title">🍽️ 美食推荐</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>合作市颐和酒店餐厅</strong> — 藏式牦牛火锅，人均¥60-80</div>
+    <div class="rec-item"><strong>香巴拉文化广场周边</strong> — 川菜/藏餐馆密集，人均¥40-60</div>
+  </div>
+  <div class="tip-box">💡 海拔3,000m，第一天不洗澡不喝酒。备好氧气瓶和红景天。</div>
+</div>
+
+<!-- Day 2 -->
+<div class="day-card">
+  <h3>Day 2 · 9/26 周五 <small>合作市 → 扎尕那</small></h3>
+  <span class="route-tag">🚗 180km · 3h</span>
+  <table class="day-table">
+    <tr><td>08:00-08:30</td><td>合作市早餐后退房</td></tr>
+    <tr><td>08:30-11:30</td><td>合作→扎尕那（G248国道，沿途草原风光美）</td></tr>
+    <tr><td>11:30-12:00</td><td>迭部县加满油 ⚠️ 扎尕那景区内无加油站</td></tr>
+    <tr><td>12:00-13:00</td><td>扎尕那景区入口购票/验票，入住民宿</td></tr>
+    <tr><td>13:00-14:00</td><td>午餐</td></tr>
+    <tr><td>14:00-17:00</td><td>仙女滩徒步（平坦栈道，适合适应海拔）</td></tr>
+    <tr><td>17:00-18:30</td><td>🌅 达日观景台看日落</td></tr>
+    <tr><td>19:00</td><td>晚餐：藏式牦牛火锅</td></tr>
+  </table>
+
+  <div class="sub-section-title">🏨 住宿推荐 · 扎尕那</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>1. 扎尕那土拨鼠观景民宿</strong> — ¥400-600/晚 <span class="price">| 2025新开，评分9.4，270°全景落地窗，有制氧机</span></div>
+    <div class="rec-item"><strong>2. 松间牧云民宿</strong> — ¥350-500/晚 <span class="price">| 2025新开，评分9.7零差评，面朝仙女滩</span></div>
+    <div class="rec-item"><strong>3. 归巢民宿</strong> — ¥250-400/晚 <span class="price">| 业日村底下，窗前无遮挡看石城</span></div>
+    <div class="rec-item"><strong>4. 扎尕那云客来民宿</strong> — ¥150-250/晚 <span class="price">| 性价比之王，有充电桩</span></div>
+  </div>
+  <div class="sub-section-title">🍽️ 美食推荐</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>阿若观景民宿餐厅</strong> — 牦牛肉火锅一绝，人均¥70</div>
+    <div class="rec-item"><strong>土拨鼠民宿餐厅</strong> — 藏餐精致，人均¥60-80</div>
+    <div class="rec-item"><strong>东哇村农家餐馆</strong> — 家常炒菜，人均¥40</div>
+  </div>
+  <div class="tip-box">🎫 扎尕那门票¥80/人（3天有效）| 💡 2025年起禁飞无人机</div>
+</div>
+
+<!-- Day 3 -->
+<div class="day-card">
+  <h3>Day 3 · 9/27 周六 <small>扎尕那深度游</small></h3>
+  <span class="route-tag green">🎫 门票已含（3天有效）</span>
+  <table class="day-table">
+    <tr><td>06:00-07:00</td><td>🌅 看晨雾！（扎尕那灵魂时刻，达日或业日观景台）</td></tr>
+    <tr><td>08:00-08:30</td><td>返回民宿吃早餐</td></tr>
+    <tr><td>08:30-11:30</td><td>洛克观景台（开车或徒步上山，俯瞰整个石城）</td></tr>
+    <tr><td>11:30-13:00</td><td>午餐+午休</td></tr>
+    <tr><td>13:00-16:00</td><td>润吾沟探秘 / 或东哇村发呆拍照</td></tr>
+    <tr><td>16:00-17:00</td><td>仙女滩轻徒步（光线最好的时段）</td></tr>
+    <tr><td>17:30-18:30</td><td>达日观景台看日落金顶 🌇</td></tr>
+    <tr><td>19:00</td><td>晚餐</td></tr>
+  </table>
+  <div class="tip-box">💡 扎尕那最美是晨雾和傍晚，中午可安排休息。洛克观景台是拍全景的最佳机位。</div>
+</div>
+
+<!-- Day 4 -->
+<div class="day-card">
+  <h3>Day 4 · 9/28 周日 <small>扎尕那 → 郎木寺</small></h3>
+  <span class="route-tag">🚗 95km · 2h</span>
+  <table class="day-table">
+    <tr><td>07:00-08:00</td><td>再刷一次晨雾，或睡到自然醒</td></tr>
+    <tr><td>09:00-11:00</td><td>扎尕那→郎木寺（G248，沿途草原风光）</td></tr>
+    <tr><td>11:00-12:30</td><td>四川寺·格尔底寺 — 纳摩大峡谷、仙女洞 <strong>¥30/人</strong></td></tr>
+    <tr><td>12:30-13:30</td><td>午餐</td></tr>
+    <tr><td>13:30-15:30</td><td>甘肃寺·赛赤寺 — 金顶建筑群 <strong>¥30/人</strong>，远观天葬台</td></tr>
+    <tr><td>15:30-17:00</td><td>纳摩大峡谷轻徒步</td></tr>
+    <tr><td>傍晚</td><td>白龙江边散步，感受小镇烟火气</td></tr>
+  </table>
+
+  <div class="sub-section-title">🏨 住宿推荐 · 郎木寺镇</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>1. 达仓·奢享酒店(郎木寺景区店)</strong> — ¥300-450/晚 <span class="price">| 地暖+供氧，当地最好</span></div>
+    <div class="rec-item"><strong>2. 郎木仓民宿</strong> — ¥200-350/晚 <span class="price">| 藏式风格，性价比高</span></div>
+    <div class="rec-item"><strong>3. 郎木寺假日港湾观景宾馆</strong> — ¥180-280/晚 <span class="price">| 经济之选</span></div>
+  </div>
+  <div class="sub-section-title">🍽️ 美食推荐</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>丽莎餐厅</strong> — 藏式披萨+酸奶，网红店，人均¥50</div>
+    <div class="rec-item"><strong>藏家乐</strong> — 手抓羊肉，人均¥60</div>
+  </div>
+  <div class="warn-box">⚠️ 天葬台禁止拍照喧哗。两寺过街就到，合计门票¥60/人。</div>
+</div>
+
+<!-- Day 5 -->
+<div class="day-card">
+  <h3>Day 5 · 9/29 周一 <small>郎木寺 → 若尔盖草原 → 九曲黄河第一湾 → 唐克</small></h3>
+  <span class="route-tag">🚗 130km · 2h</span>
+  <table class="day-table">
+    <tr><td>09:00-10:30</td><td>郎木寺→若尔盖草原（沿途随时停车拍照）</td></tr>
+    <tr><td>10:30-12:00</td><td>若尔盖草原游玩（草原免费开放）</td></tr>
+    <tr><td>12:00-13:00</td><td>若尔盖县午餐 · 牦牛汤锅</td></tr>
+    <tr><td>13:00-14:30</td><td>若尔盖→唐克镇</td></tr>
+    <tr><td>14:30-16:00</td><td>入住休息，养精蓄锐</td></tr>
+    <tr><td>16:30-19:00</td><td>🌅 九曲黄河第一湾看日落！套票¥105含扶梯上山</td></tr>
+    <tr><td>19:00-19:30</td><td>步行下山（扶梯只上不下）</td></tr>
+    <tr><td>20:00</td><td>晚餐：唐克镇川菜</td></tr>
+  </table>
+
+  <div class="sub-section-title">🏨 住宿推荐 · 唐克镇</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>1. 黄河外滩洲际酒店</strong> — ¥380-500/晚 <span class="price">| 豪华型，270°落地窗看黄河，有供氧</span></div>
+    <div class="rec-item"><strong>2. 黄河九歌民宿</strong> — ¥250-350/晚 <span class="price">| 2025新开业，设施新，有停车位</span></div>
+    <div class="rec-item"><strong>3. 若尔盖索格藏大酒店</strong> — ¥200-300/晚 <span class="price">| 有独立院子停车，有暖气</span></div>
+  </div>
+  <div class="sub-section-title">🍽️ 美食推荐</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>唐克镇川菜馆</strong> — 牦牛肉汤锅+川菜，人均¥50-70</div>
+  </div>
+  <div class="tip-box">💡 观景台海拔3,600m+，日落约18:30，提前半小时到山顶占位。2025年唐克镇修路灰尘大，选有院子的酒店。</div>
+</div>
+
+<!-- Day 6 -->
+<div class="day-card">
+  <h3>Day 6 · 9/30 周二 <small>唐克 → 九寨沟</small></h3>
+  <span class="route-tag">🚗 290km · 4.5h</span>
+  <table class="day-table">
+    <tr><td>08:00-09:00</td><td>唐克出发（早晨光线好，沿途顺手拍照）</td></tr>
+    <tr><td>09:00-11:00</td><td>若尔盖→川主寺（S301转G213）</td></tr>
+    <tr><td>11:00-12:00</td><td>川主寺午餐 · 牦牛肉面</td></tr>
+    <tr><td>12:00-13:30</td><td>川主寺→九寨沟沟口</td></tr>
+    <tr><td>13:30-14:00</td><td>入住沟口酒店，停好车，踩点景区入口</td></tr>
+    <tr><td>14:00-17:00</td><td>逛漳扎镇，买明天进沟物资（自热米饭+水）</td></tr>
+    <tr><td>18:00</td><td>晚餐：藏式烤鱼+牦牛酸奶</td></tr>
+  </table>
+
+  <div class="success-box">🎉 提前在"阿坝旅游网"公众号买好明天九寨沟门票 ¥190+90=¥280/人！</div>
+</div>
+
+<!-- Day 7 -->
+<div class="day-card">
+  <h3>Day 7 · 10/1 周三 <small>九寨沟全天游览 🏆 核心日！</small></h3>
+  <span class="route-tag green">🎫 ¥280/人（门票+观光车）</span>
+  <table class="day-table">
+    <tr><td>07:30</td><td>到景区门口排队，赶第一波入园！</td></tr>
+    <tr><td>08:00-08:30</td><td>观光车→原始森林（车上拍晨雾中的山林）</td></tr>
+    <tr><td>08:30-10:30</td><td>五花海 → 珍珠滩（精华段！早去几乎包场）</td></tr>
+    <tr><td>10:30-11:30</td><td>镜海（无风时倒影绝美）→ 诺日朗瀑布</td></tr>
+    <tr><td>11:30-12:30</td><td>诺日朗中心午餐（自热米饭省钱省时）</td></tr>
+    <tr><td>12:30-14:00</td><td>则查洼沟：长海（最高点）→ 五彩池（最美小海子）</td></tr>
+    <tr><td>14:00-16:00</td><td>树正沟：犀牛海→老虎海→树正群海（沿栈道步行）</td></tr>
+    <tr><td>16:00-17:00</td><td>出沟，回酒店休息</td></tr>
+    <tr><td>19:00</td><td>晚餐庆祝🎉</td></tr>
+  </table>
+
+  <div class="sub-section-title">🏨 住宿推荐 · 九寨沟沟口</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>1. 沟口漫心酒店</strong> — ¥500-800/晚 <span class="price">| 2025年新开业，步行5分钟到景区，华住中高端</span></div>
+    <div class="rec-item"><strong>2. 九寨沟贵宾楼饭店</strong> — ¥400-700/晚 <span class="price">| 仅25间房，水上餐厅，步行到检票口5分钟</span></div>
+    <div class="rec-item"><strong>3. 悠家民宿(游客中心店)</strong> — ¥250-400/晚 <span class="price">| 2025新装修，性价比高，楼下全是餐厅</span></div>
+  </div>
+  <div class="sub-section-title">🍽️ 美食推荐</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>藏家小馆</strong> — 铁板牦牛肉+烤羊排，人均¥60，开到凌晨</div>
+    <div class="rec-item"><strong>彭丰村主街</strong> — 川菜+藏餐密集，有瑞幸/肯德基/霸王茶姬</div>
+    <div class="rec-item"><strong>阿妈藏餐(漳扎镇)</strong> — 糌粑+酥油茶仅¥25，地道实惠</div>
+  </div>
+</div>
+
+<!-- Day 8 -->
+<div class="day-card">
+  <h3>Day 8 · 10/2 周四 <small>九寨沟 🚗 成都（九绵高速已通车！）</small></h3>
+  <span class="route-tag blue">🚗 400km · 4h（新高速！）</span>
+  <table class="day-table">
+    <tr><td>08:00-08:30</td><td>退房出发</td></tr>
+    <tr><td>08:30-12:30</td><td>🎉 九绵高速→成都！全程高速仅4h（9/29刚通车！）</td></tr>
+    <tr><td>12:30-14:00</td><td>成都午餐 · 火锅必须安排🔥</td></tr>
+    <tr><td>14:00-17:00</td><td>下午成都半日游</td></tr>
+    <tr><td>17:00</td><td>入住酒店（推荐双流机场附近）</td></tr>
+    <tr><td>晚上</td><td>成都夜生活：火锅/串串/夜市</td></tr>
+  </table>
+
+  <div class="sub-section-title">🏨 住宿推荐 · 成都（双流机场附近）</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>1. 成都空港云享酒店(双流机场店)</strong> — ¥350-500/晚 <span class="price">| 国际水准，VIP快捷通道安检，免费接送机</span></div>
+    <div class="rec-item"><strong>2. 全季酒店(5.0新版)</strong> — ¥250-400/晚 <span class="price">| 智能马桶，免费接送机，车程8分钟</span></div>
+    <div class="rec-item"><strong>3. 空港假日酒店</strong> — ¥300-450/晚 <span class="price">| 步行可达空港花田，亲子友好</span></div>
+  </div>
+  <div class="sub-section-title">🍽️ 成都美食</div>
+  <div class="rec-box">
+    <div class="rec-item"><strong>中午：进城吃火锅</strong> — 推荐小龙坎/大龙燚/蜀大侠，人均¥80-120</div>
+    <div class="rec-item"><strong>下午游：宽窄巷子/锦里/太古里</strong> — 地铁直达</div>
+    <div class="rec-item"><strong>晚上：双流老妈兔头</strong> — 机场附近就有正宗店</div>
+  </div>
+  <div class="success-box">🚀 九绵高速2025年9月29日全线通车！成都→九寨沟从8h缩至4h，沿途串联平武、北川、江油，风景绝美！</div>
+</div>
+
+<!-- Day 9 -->
+<div class="day-card">
+  <h3>Day 9 · 10/3 周五 <small>成都 ✈️ 深圳</small></h3>
+  <span class="route-tag blue">✈️ 2.5h · 航班密集</span>
+  <table class="day-table">
+    <tr><td>上午</td><td>自由活动（二选一）</td></tr>
+    <tr><td style="color:#666">方案A</td><td>睡到自然醒→空港花田看飞机掠过头顶→午餐后去机场</td></tr>
+    <tr><td style="color:#666">方案B</td><td>地铁进城→逛太古里/春熙路→午餐火锅→地铁回机场</td></tr>
+    <tr><td>下午/傍晚</td><td>成都✈️深圳（2.5h，班次极多，按需选择）</td></tr>
+    <tr><td>到达</td><td>🏠 到家！完美的9天之旅！</td></tr>
+  </table>
+  <div class="tip-box">✈️ 成都双流→深圳宝安，每天数十班，飞行约2h15m-2h30m，推荐下午3-5点的航班，到家不晚。</div>
+</div>
+
+<hr class="divider">
+
+<!-- Budget -->
+<div class="section-title">💰 预算清单（两人）</div>
+<table class="budget-table">
+  <tr><th>项目</th><th>明细</th><th style="text-align:right">金额</th></tr>
+  <tr><td>✈️ 深圳↔兰州/成都↔深圳</td><td>单程约¥800-1200/人 × 2人 × 2程</td><td style="text-align:right">¥3,200-4,800</td></tr>
+  <tr><td>🚗 租车</td><td>SUV ¥300/天 × 7天</td><td style="text-align:right">¥2,100</td></tr>
+  <tr><td>⛽ 油费+过路费</td><td>约1,300km</td><td style="text-align:right">¥1,000</td></tr>
+  <tr><td>🎫 门票</td><td>扎尕那¥160 + 郎木寺¥120 + 九曲¥210 + 九寨沟¥560</td><td style="text-align:right">¥1,050</td></tr>
+  <tr><td>🏨 住宿</td><td>8晚 × 平均¥300</td><td style="text-align:right">¥2,400</td></tr>
+  <tr><td>🍜 餐饮</td><td>9天 × 两人×¥150</td><td style="text-align:right">¥2,700</td></tr>
+  <tr><td>🅿️ 其他</td><td>停车费+零食+纪念品</td><td style="text-align:right">¥300</td></tr>
+  <tr><td colspan="2"><strong>合计</strong></td><td style="text-align:right"><strong>≈ ¥10,500-12,500</strong></td></tr>
+</table>
+
+<div class="tip-box">💰 省钱技巧：早订机票（9月淡季可能¥500+）；九寨沟自带自热米饭；合作/扎尕那等低海拔段住经济型即可。</div>
+
+<hr class="divider">
+
+<!-- Route Summary -->
+<div class="section-title">🗺️ 路线总览</div>
+<div style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px;">
+<div style="font-size: 14px; line-height: 2.2;">
+<strong>深圳</strong> ✈️ 3h → <strong>兰州</strong> 🚗 3h → <strong>合作</strong> 🚗 3h → <strong>扎尕那(2天)</strong> 🚗 2h → <strong>郎木寺</strong> 🚗 2h → <strong>若尔盖+九曲黄河</strong> 🚗 4.5h → <strong>九寨沟(2天)</strong> 🚗 4h 🎉 → <strong>成都</strong> ✈️ 2.5h → <strong>深圳</strong>
+</div>
+</div>
+
+<hr class="divider">
+
+<!-- Tips -->
+<div class="section-title">🎒 打包清单</div>
+<div class="packing">
+  <div class="packing-item">🧥 冲锋衣 / 薄羽绒</div>
+  <div class="packing-item">👕 保暖内衣 / 长袖</div>
+  <div class="packing-item">🥾 徒步鞋 / 运动鞋</div>
+  <div class="packing-item">🧢 帽子 / 围巾</div>
+  <div class="packing-item">🕶️ 墨镜（高原必备）</div>
+  <div class="packing-item">🧴 SPF50+防晒霜</div>
+  <div class="packing-item">💊 红景天/葡萄糖/布洛芬</div>
+  <div class="packing-item">🔋 充电宝（信号差费电）</div>
+  <div class="packing-item">🗺️ 高德/百度离线地图</div>
+  <div class="packing-item">☂️ 雨伞+雨衣</div>
+  <div class="packing-item">🥫 自热米饭（九寨沟用）</div>
+  <div class="packing-item">💳 驾驶证+身份证</div>
+</div>
+
+<div class="section-title">⚠️ 注意事项</div>
+<div class="info-grid">
+  <div class="info-item"><div class="label">高反</div><div class="value">前2天不洗澡，慢行动</div></div>
+  <div class="info-item"><div class="label">加油</div><div class="value">迭部/若尔盖加满</div></div>
+  <div class="info-item"><div class="label">信号</div><div class="value">扎尕那部分无信号</div></div>
+  <div class="info-item"><div class="label">路况</div><div class="value">牛羊上路，减速避让</div></div>
+  <div class="info-item"><div class="label">寺庙</div><div class="value">顺时针转经，禁拍佛像</div></div>
+  <div class="info-item"><div class="label">门票</div><div class="value">九寨沟提前网上买</div></div>
+  <div class="info-item"><div class="label">温差</div><div class="value">白天15-20℃，早晚0-8℃</div></div>
+  <div class="info-item"><div class="label">成都</div><div class="value">双流/天府机场，注意区分</div></div>
+</div>
+
+<br>
+<div style="text-align:center; color: var(--muted); font-size: 13px; padding: 20px 0;">
+  🏆 Generated by Claude · Skill: 智能旅行规划师 v3.0 · 祝旅途愉快！
+</div>
+
+</div>
+</body>
+</html>
