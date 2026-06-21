@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "node",
+      "args": ["/Users/neil/Documents/trae_projects/skill-space/skills/sqlite-mcp-server/dist/index.js"],
+      "env": {
+        "SQLITE_DB_PATH": "/path/to/your/database.sqlite"
+      }
+    }
+  }
+}
