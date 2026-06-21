@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "skills": {
+    "charge-thinking": {
+      "name": "阿里P8高级产品专家-CEO思维分析",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=charge-thinking",
+      "source": "community",
+      "version": "1.0.0",
+      "installedAt": "2026-06-21T06:17:28Z"
+    },
+    "one-person-company-plus": {
+      "name": "一人公司全能运营助手（OPC）",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=one-person-company-plus",
+      "source": "community",
+      "version": "1.0.0",
+      "installedAt": "2026-06-21T06:18:52Z"
+    }
+  }
+}
